@@ -24,5 +24,5 @@ public class Session {
     private String gameState;
     private Date date;
     @OneToMany (mappedBy = "session")
-    List<Cells> cells;
+    List<Cell> cells;
 }
