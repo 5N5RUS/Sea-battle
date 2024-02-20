@@ -23,7 +23,7 @@ public class UserController {
     public String getUserData(
             @PathVariable Long id
     ) {
-        User user = userService.getById(1L).get();
+        User user = userService.getById(id).get();
         String jsonUserData;
         try {
             jsonUserData = objMapper.writeValueAsString(user);
