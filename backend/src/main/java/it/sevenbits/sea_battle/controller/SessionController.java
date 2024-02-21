@@ -1,10 +1,12 @@
 package it.sevenbits.sea_battle.controller;
 
+import it.sevenbits.sea_battle.entity.Cell;
 import it.sevenbits.sea_battle.entity.Session;
 import it.sevenbits.sea_battle.services.SessionService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -42,5 +44,12 @@ public class SessionController {
         sessionService.remove(id);
     }
 
+    @GetMapping("/{sessionId}/users/{userId}")
+    public List<Cell> getUserCells(
+            @PathVariable Long sessionId,
+            @PathVariable Long userId
+    ) {
+        return sessionService.getUserCells(sessionId, userId);
+    }
 
 }
