@@ -1,5 +1,5 @@
 import React from 'react'
-import "./timer.css"
+import "./CountDownTimer.css"
 
 interface ICountdown {
     minutes: number;

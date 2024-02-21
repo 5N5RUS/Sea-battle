@@ -4,7 +4,15 @@
 }
 
 .battleground_player-ground{
-    width: 400px;
-    height: 400px;
-    background-color: blue;
+    width: 409px;
+    height: 409px;
+    background: url(../../assets/Sea-ground.png);
+    display: grid;
+    grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px ;
+    grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px ;
+    gap: 1px;
+}
+
+.battleground_player-button{
+    background-color: red;
 }
