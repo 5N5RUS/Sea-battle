@@ -1,0 +1,10 @@
+.battleground{
+    display: flex;
+    justify-content: space-between;
+}
+
+.battleground_player-ground{
+    width: 400px;
+    height: 400px;
+    background-color: blue;
+}
