@@ -4,11 +4,13 @@ import it.sevenbits.sea_battle.entity.Cell;
 import it.sevenbits.sea_battle.repository.CellRepository;
 import it.sevenbits.sea_battle.services.interfaces.CrudService;
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
+@Service
 public class CellService implements CrudService<Cell> {
     private final CellRepository cellRepository;
     @Override
