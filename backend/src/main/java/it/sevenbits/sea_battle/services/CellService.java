@@ -1,12 +1,16 @@
 package it.sevenbits.sea_battle.services;
 
 import it.sevenbits.sea_battle.entity.Cell;
+import it.sevenbits.sea_battle.repository.CellRepository;
 import it.sevenbits.sea_battle.services.interfaces.CrudService;
+import lombok.AllArgsConstructor;
 
 import java.util.List;
 import java.util.Optional;
 
+@AllArgsConstructor
 public class CellService implements CrudService<Cell> {
+    private final CellRepository cellRepository;
     @Override
     public Optional<Cell> getById(Long id) {
         return Optional.empty();
@@ -19,21 +23,21 @@ public class CellService implements CrudService<Cell> {
 
     @Override
     public void remove(Long id) {
-
+        cellRepository.deleteById(id);
     }
 
     @Override
-    public void remove(Cell object) {
-
+    public void remove(Cell cell) {
+        cellRepository.delete(cell);
     }
 
     @Override
-    public void update(Long id, Cell objectToBeUpdated) {
-
+    public void update(Long id, Cell cellToBeUpdated) {
+        cellRepository.save(cellToBeUpdated);
     }
 
     @Override
-    public void save(Cell objectToSave) {
-
+    public void save(Cell cellToSave) {
+        cellRepository.save(cellToSave);
     }
 }

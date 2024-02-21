@@ -20,6 +20,10 @@ public class Cell {
     @Column(name = "is_shot_down")
     boolean isShotDown;
 
+    @ManyToOne
+    User user;
+
+
     @Column(name = "x_pos")
     int x;
 
