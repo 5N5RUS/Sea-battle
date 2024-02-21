@@ -1,23 +1,23 @@
 package it.sevenbits.sea_battle.controller;
 
 import it.sevenbits.sea_battle.entity.Session;
-import it.sevenbits.sea_battle.entity.User;
 import it.sevenbits.sea_battle.services.SessionService;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/session")
+@AllArgsConstructor
 public class SessionController {
 
     SessionService sessionService;
 
-    public SessionController(SessionService sessionService) {
-        this.sessionService = sessionService;
-    }
-
     @GetMapping("/{id}")
-    public String GetSessionData(@PathVariable String id) {
-        return "S";
+    public Session GetSessionData(@PathVariable long id) {
+        return sessionService.getById(id).get();
+
     }
 
     @PatchMapping("/{id}")
@@ -41,4 +41,6 @@ public class SessionController {
     ) {
         sessionService.remove(id);
     }
+
+
 }

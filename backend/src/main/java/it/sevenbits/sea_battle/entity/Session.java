@@ -17,10 +17,10 @@ import java.util.List;
 public class Session {
 
     @Id
-    private Long ID;
+    private Long id;
 
-    private Long winner_ID;
-    private Long turn_Player_ID;
+    private Long winnerId;
+    private Long turnPlayerId;
     private String gameState;
     private Date date;
     @OneToMany (mappedBy = "session")
