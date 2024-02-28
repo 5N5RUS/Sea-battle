@@ -116,7 +116,7 @@ const Battleground = () => {
                     <th></th>
                     <th></th>
                     <th></th>
-                    <th></th>
+                    <th className="ship"></th>
                     <th></th>
                     <th></th>
                     <th className="ship"></th>

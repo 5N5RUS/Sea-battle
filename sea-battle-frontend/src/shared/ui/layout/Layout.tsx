@@ -23,11 +23,15 @@ const Layout = ({ children }: LayoutProps) => {
                 {"Back"}
                 </Button>
             </React.StrictMode>
-            
+
+            <a href="battleground">battleground</a>
+                
             <div className="timer-turn">
                 <CountDownTimer minutes={1} seconds={0}/>
                 <p className="player-turn">You turn</p>
             </div>
+
+            <a href="testpage">testpage</a>
 
             <React.StrictMode>
                 <Button
