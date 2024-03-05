@@ -1,0 +1,40 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layout_header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 1400px;
+  margin-top: 50px;
+  margin-right: 500px;
+  margin-left: 500px;
+}
+
+.layout_main {
+  width: 100%;
+  max-width: 1000px;
+  padding: 25px 100px;
+  margin-top: 50px;
+}
+
+.timer-turn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-turn {
+  font-family: Roboto, sans-serif;
+  font-size: 22px;
+  color: white;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}

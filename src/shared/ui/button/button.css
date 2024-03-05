@@ -1,0 +1,32 @@
+button {
+  width: 80px;
+  height: 40px;
+  font-family: inherit;
+  font-family: Roboto, sans-serif;
+  font-size: 1em;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 18px;
+  color: #6bc9e6;
+  text-align: center;
+  letter-spacing: 0;
+  cursor: pointer;
+  background-color: white;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 2px 4px 0 #74bbfd4d;
+  transition: border-color 0.25s;
+}
+
+button:hover {
+  background: #49a7ff;
+}
+
+button:active {
+  background: #49a7ff;
+}
+
+button:disabled {
+  background: #bdbdbd;
+  box-shadow: none;
+}

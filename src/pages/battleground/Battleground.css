@@ -1,0 +1,55 @@
+.battleground {
+  display: flex;
+  justify-content: space-between;
+}
+
+.battleground-player_ground {
+  display: grid;
+  grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+  grid-template-columns: 40px 40px 40px 40px 40px 40px 40px 40px 40px 40px;
+  gap: 2px;
+  width: 418px;
+  height: 418px;
+  padding: 5px;
+  color: blue;
+
+  /* background-color: #6BC9E6; */
+  background: url("../../assets/Sea-ground.png");
+}
+
+.battleground-player__button {
+  background-color: white;
+  opacity: 50;
+}
+
+.battleground-player__button:active {
+  background-color: red;
+}
+
+th,
+td {
+  border-color: #6bc9e6;
+  border-style: solid;
+  border-width: 2px;
+}
+
+td {
+  width: 40px;
+  height: 40px;
+}
+
+table {
+  width: 400px;
+  height: 400px;
+  padding: 10px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  background: url("../../assets/Sea-ground.png");
+  border-color: red;
+  border-style: solid;
+  border-width: 2px;
+}
+
+.ship {
+  background-color: white;
+}
