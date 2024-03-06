@@ -23,7 +23,7 @@ const Battleground = () => {
             color="#6BC9E6"
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 22 24"
-            id="IconChangeColor"
+            id="iconchangecolor"
             height="80%"
             width="100%"
           >
