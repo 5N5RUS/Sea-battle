@@ -1,16 +1,20 @@
 import "./button.css";
 
-import { MouseEventHandler } from "react";
+import { MouseEventHandler, ReactNode } from "react";
 
 export type ButtonProps = {
-  className: string;
-  onClick: MouseEventHandler<HTMLButtonElement>;
-  disabled: boolean;
-  children: string;
+  className?: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
+  children?: ReactNode;
 };
 
 const Button = ({ className, onClick, disabled, children }: ButtonProps) => (
-  <button className={`${className}`} onClick={onClick} disabled={disabled}>
+  <button
+    className={`button ${className}`}
+    onClick={onClick}
+    disabled={disabled}
+  >
     {children}
   </button>
 );

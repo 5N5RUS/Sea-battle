@@ -1,11 +1,12 @@
 button {
-  width: 80px;
-  height: 40px;
+  width: 120px;
+  height: 60px;
   font-family: inherit;
   font-family: Roboto, sans-serif;
   font-size: 1em;
   font-size: 15px;
-  font-weight: 400;
+  font-size: 25px;
+  font-weight: 600;
   line-height: 18px;
   color: #6bc9e6;
   text-align: center;
@@ -13,17 +14,16 @@ button {
   cursor: pointer;
   background-color: white;
   border: none;
-  border-radius: 3px;
-  box-shadow: 0 2px 4px 0 #74bbfd4d;
+  border-radius: 20px;
   transition: border-color 0.25s;
 }
 
 button:hover {
-  background: #49a7ff;
+  box-shadow: 0 4px 2px 0 #99afb6;
 }
 
 button:active {
-  background: #49a7ff;
+  background: #e9ebed;
 }
 
 button:disabled {

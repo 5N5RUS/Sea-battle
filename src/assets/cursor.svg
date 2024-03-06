@@ -1,0 +1,9 @@
+<svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="17" cy="17" r="16" transform="matrix(1 0 0 -1 6 40)" stroke="#2C2C2C" stroke-width="2"/>
+<circle cx="13" cy="13" r="12.5" transform="matrix(1 0 0 -1 10 36)" stroke="#2C2C2C"/>
+<circle cx="3" cy="3" r="3" transform="matrix(1 0 0 -1 20 26)" fill="#E56969"/>
+<path d="M23 28V46" stroke="#2C2C2C"/>
+<path d="M23 0V18" stroke="#2C2C2C"/>
+<path d="M28 23H46" stroke="#2C2C2C"/>
+<path d="M0 23H18" stroke="#2C2C2C"/>
+</svg>
