@@ -4,7 +4,7 @@
   grid-template-columns: repeat(10, 48px);
   width: 480px;
   height: 480px;
-  background: url("../../assets/Sea-ground.png");
+  background: url("../../assets/images/Sea-ground.png");
 }
 
 .grid-item {
@@ -14,14 +14,14 @@
 
 .grid-item:hover {
   cursor: none;
-  background: rgb(243 165 165 / 70%) url("src/assets/cursor.svg");
+  background: rgb(243 165 165 / 70%) url("src/assets/svgs/cursor.svg");
 }
 
 .grid-item:active {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("src/assets/miss.svg");
+  background: url("src/assets/svgs/miss.svg");
   background-repeat: no-repeat;
   background-position: center;
 }
