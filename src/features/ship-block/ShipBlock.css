@@ -1,0 +1,29 @@
+.ships-wrapper {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.battleship {
+  width: 190px;
+  height: 46px;
+  background-color: white;
+}
+
+.cruiser {
+  width: 142px;
+  height: 46px;
+  background-color: white;
+}
+
+.destroyer {
+  width: 94px;
+  height: 46px;
+  background: url("src/assets/svgs/destroyer.svg");
+}
+
+.patrol-boat {
+  width: 46px;
+  height: 46px;
+  background-color: white;
+}

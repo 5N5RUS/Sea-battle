@@ -1,0 +1,50 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.layout_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 1400px;
+  margin-top: 50px;
+  margin-right: 500px;
+  margin-left: 500px;
+}
+
+.layout_main {
+  width: 100%;
+  width: 1400px;
+  padding: 25px 100px;
+  margin-top: 50px;
+}
+
+.timer-turn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-turn {
+  margin-top: 10px;
+  font-family: Roboto, sans-serif;
+  font-size: 35px;
+  color: white;
+  opacity: 0.55;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.layout_footer {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  width: 1000px;
+  margin-top: 50px;
+  margin-left: 35px;
+}
