@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Logs
 logs
 *.log
@@ -22,3 +23,23 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+=======
+#Default ignored files
+/shelf/
+/.idea/workspace.xml
+##############################
+#Java
+##############################
+.mtj.tmp/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+*.iml
+*.idea
+/target
+hs_err_pid*
+target
+>>>>>>> 0bd58b5 ([*] updated .gitignore)
+>>>>>>> 0028fddec35a8a85d6697de11a1c46c655106b69
