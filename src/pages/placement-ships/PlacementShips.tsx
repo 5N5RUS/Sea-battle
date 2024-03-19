@@ -7,7 +7,7 @@ import CountDownTimer from "src/features/timer/CountDownTimer";
 import Button from "src/shared/ui/button/Button";
 import Layout from "src/shared/ui/layout/Layout";
 
-import Ground from "../battleground/Ground";
+import Ground from "../../shared/ui/ground/Ground";
 
 const PlacementShips = () => {
   const navigate = useNavigate();

@@ -19,7 +19,7 @@
 .destroyer {
   width: 94px;
   height: 46px;
-  background: url("src/assets/destroyer.svg");
+  background: url("src/assets/svgs/destroyer.svg");
 }
 
 .patrol-boat {
