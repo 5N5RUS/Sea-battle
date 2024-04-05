@@ -15,10 +15,6 @@
   border-radius: 30px;
 }
 
-.main {
-  display: flex;
-}
-
 .ships-list {
   display: flex;
   flex-direction: column;
