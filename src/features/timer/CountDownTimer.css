@@ -1,5 +1,18 @@
 .timer {
-  font-family: Roboto, sans-serif;
-  font-size: 60px;
-  color: white;
+  margin-right: 30px;
+  margin-left: 30px;
+  font-family: "PT Sans", sans-serif;
+  font-size: 64px;
+  font-weight: 800;
+  color: #1f1f1f;
+}
+
+.timer_wrapper {
+  display: flex;
+  width: 315;
+  height: 84;
+  background: #fede65;
+  border: 4px #1f1f1f solid;
+  border-radius: 20px;
+  box-shadow: 4px 4px 0 #1f1f1f;
 }

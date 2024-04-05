@@ -16,9 +16,10 @@
 
 .layout_main {
   width: 100%;
-  width: 1400px;
+  width: 1100px;
   padding: 25px 100px;
   margin-top: 50px;
+  margin-left: 30px;
 }
 
 .timer-turn {
@@ -29,10 +30,9 @@
 
 .player-turn {
   margin-top: 10px;
-  font-family: Roboto, sans-serif;
   font-size: 35px;
-  color: white;
-  opacity: 0.55;
+  font-weight: 700;
+  color: #1f1f1f;
 }
 
 a {
@@ -47,4 +47,22 @@ a {
   width: 1000px;
   margin-top: 50px;
   margin-left: 35px;
+}
+
+.rules-button {
+  display: block;
+  width: 80px;
+  height: 80px;
+  font-size: 70px;
+  color: white;
+  background-color: #cbe9f2;
+  border: 5px solid;
+  border-radius: 100%;
+}
+
+.button_wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 147px;
 }
