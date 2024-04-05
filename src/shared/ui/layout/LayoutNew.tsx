@@ -11,7 +11,7 @@ type LayoutProps = {
   footer?: ReactNode;
 };
 
-const Layout = ({
+const LayoutNew = ({
   back_button,
   timer,
   help_button,
@@ -22,12 +22,14 @@ const Layout = ({
   return (
     <div className="layout">
       <header className="layout_header">
-        <div className="button_wrapper">{back_button}</div>
+        {back_button}
+
         <div className="timer-turn">
           {timer}
           {text}
         </div>
-        <div className="button_wrapper">{help_button}</div>
+
+        {help_button}
       </header>
       <main className="layout_main">{children}</main>
       <footer className="layout_footer">{footer}</footer>
@@ -35,4 +37,4 @@ const Layout = ({
   );
 };
 
-export default Layout;
+export default LayoutNew;

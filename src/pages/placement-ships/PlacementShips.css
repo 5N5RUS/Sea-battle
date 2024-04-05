@@ -1,20 +1,9 @@
 #iconchangecolor {
-  fill: #6bc9e6;
-  transform: scale(1, -1);
+  fill: white;
 }
 
 .back-button {
   border-radius: 30px;
-}
-
-.rules-button {
-  width: 80px;
-  height: 80px;
-  font-size: 70px;
-  color: white;
-  background-color: #6bc9e6;
-  border: 5px solid white;
-  border-radius: 100%;
 }
 
 .reset-button {

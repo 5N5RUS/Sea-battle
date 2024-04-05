@@ -1,0 +1,155 @@
+.mainreg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.main__registration {
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: 644px;
+  height: 619px;
+  margin-left: 5px;
+  background: white;
+  border: 4px #1f1f1f solid;
+  border-radius: 20px;
+  box-shadow: 8px 8px 0 #1f1f1f;
+}
+
+.registration__header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 61px;
+  background: #fede65;
+  border-bottom: 4px #1f1f1f solid;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.header__circles {
+  display: flex;
+  gap: 15px;
+  margin-left: 30px;
+}
+
+.circles_circle {
+  width: 20px;
+  height: 20px;
+  border: 4px #1f1f1f solid;
+  border-radius: 9999px;
+}
+
+.circle_first {
+  background-color: #eb9e9e;
+}
+
+.circle_second {
+  background-color: #abdc58;
+}
+
+.circle_third {
+  background-color: #8d53ff;
+}
+
+.registration_title {
+  margin-top: 26px;
+  margin-bottom: 36px;
+  font-size: 64px;
+  font-weight: 800;
+  color: #2c2c2c;
+  text-transform: uppercase;
+}
+
+.registration__form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  width: 100%;
+  max-width: 484px;
+}
+
+input {
+  width: 446px;
+  padding-top: 23px;
+  padding-bottom: 26px;
+  padding-left: 32px;
+  font-family: Inter, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #2c2c2c;
+  background: white;
+  border: 3px rgb(0 0 0 / 30%) solid;
+  border-radius: 20px;
+  transition: 0.1s;
+}
+
+.input_login-error {
+  margin-top: 5px;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3a849b;
+  transition: 0.1s;
+}
+
+input:not(:placeholder-shown) {
+  border: 3px black solid;
+}
+
+input.error {
+  border-color: #eb9e9e;
+}
+
+input.error:hover {
+  border-color: black;
+}
+
+input.error:not(:placeholder-shown):hover {
+  border-color: black;
+}
+
+input:hover:not(.error) {
+  border-color: black;
+}
+
+.form_button-submit {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 484px;
+  height: 83px;
+  overflow: hidden;
+  font-family: "PT Sans", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f1f1f;
+  text-transform: uppercase;
+  background: #6bc9e6;
+  border: 3px #1f1f1f solid;
+  border-radius: 20px;
+  box-shadow: 4px 4px 0 #1f1f1f;
+  transition: 0.1s;
+}
+
+.form_button-submit:hover {
+  background-color: #40a6c6;
+}
+
+.form_button-submit:active {
+  box-shadow:
+    4px 4px 0 #1f1f1f,
+    inset 4px 4px 0 #307c96;
+}
+
+.mainreg_logo {
+  position: relative;
+  bottom: 200px;
+  left: 80px;
+}

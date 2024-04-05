@@ -3,7 +3,7 @@ import "./ShipBlock.css";
 type ShipBlockProps = {
   ship_count: number;
   className: string;
-  text: string;
+  text?: string;
 };
 
 const ShipBlock = ({ ship_count, className, text }: ShipBlockProps) => {

@@ -1,0 +1,124 @@
+.bubbles-second {
+  position: relative;
+  top: -50px;
+  left: -80px;
+  z-index: -9999;
+  width: 294.59px;
+  height: 304.56px;
+  transform: rotate(-5.4deg);
+  transform-origin: 0 0;
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 9999px;
+}
+
+.large-bubble-second {
+  top: 334px;
+  left: 200.57px;
+  width: 237px;
+  height: 237px;
+  border: 4px white solid;
+  transform: rotate(89.21deg);
+  transform-origin: 0 0;
+}
+
+.medium-bubble-second {
+  top: 269.65px;
+  left: 225.67px;
+  width: 70px;
+  height: 70px;
+  border: 4px white solid;
+  transform: rotate(89.21deg);
+  transform-origin: 0 0;
+}
+
+.small-bubble-second {
+  top: 360.57px;
+  left: 242.58px;
+  width: 33.97px;
+  height: 33.97px;
+  background: white;
+  transform: rotate(89.21deg);
+  transform-origin: 0 0;
+}
+
+.circular-bubble-second {
+  top: 366.73px;
+  left: 105.95px;
+  width: 45px;
+  height: 45px;
+  background: white;
+  transform: rotate(-5.4deg);
+  transform-origin: 0 0;
+}
+
+.small-circular-bubble-second {
+  top: 283.01px;
+  left: 173.38px;
+  width: 16px;
+  height: 16px;
+  background: white;
+  transform: rotate(-5.4deg);
+  transform-origin: 0 0;
+}
+
+.bubbles-first {
+  position: relative;
+  top: -90px;
+  left: 50px;
+  z-index: -9999;
+  width: 310px;
+  height: 265.59px;
+}
+
+.large-bubble-first {
+  top: -118px;
+  left: 162px;
+  width: 198px;
+  height: 198px;
+  border: 4px white solid;
+}
+
+.medium-bubble-first {
+  top: -160px;
+  left: 50px;
+  width: 70px;
+  height: 70px;
+  border: 4px white solid;
+}
+
+.small-bubble-first {
+  top: 21.73px;
+  left: 122.59px;
+  width: 33.97px;
+  height: 33.97px;
+  background: white;
+  transform: rotate(94.61deg);
+  transform-origin: 0 0;
+}
+
+.extra-small-bubble-first {
+  top: -88px;
+  left: 207px;
+  width: 25px;
+  height: 25px;
+  background: white;
+}
+
+.tiny-bubble-first {
+  top: -118px;
+  left: 86px;
+  width: 16px;
+  height: 16px;
+  background: white;
+}
+
+.small-bubble-first-two {
+  top: 11px;
+  left: 191px;
+  width: 16px;
+  height: 16px;
+  background: white;
+}
