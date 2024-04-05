@@ -2,10 +2,7 @@ import "./Bubbles.css";
 
 const Bubbles2 = () => {
   return (
-    <div
-      className=".bubbles-second {
-      "
-    >
+    <div className="bubbles-second">
       <div className="bubble large-bubble-second" />
       <div className="bubble medium-bubble-second" />
       <div className="bubble small-bubble-second" />

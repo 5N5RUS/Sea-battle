@@ -1,21 +1,21 @@
-import "./SignIn.css";
+import "./SignUp.css";
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ClimbingBoxLoader } from "react-spinners";
-import Bubbles1 from "src/shared/ui/bubbles/Bubbles1";
-import Bubbles2 from "src/shared/ui/bubbles/Bubbles2";
+import MainCard from "src/widgets/main-card/MainCard";
 
-const SignIn = () => {
+const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [usernameError, setUsernameError] = useState("");
   const [usernameErrorOnSubmit, setUsernameErrorOnSubmit] = useState("");
   const [usernameInputErrorOnSubmit, setUsernameInputErrorOnSubmit] =
     useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
   useEffect(() => {
     if (username.length < 5) {
       setUsernameError("Логин должен содержать минимум 5 символов");
@@ -40,6 +40,10 @@ const SignIn = () => {
     setPassword(e.target.value);
   };
 
+  const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setConfirmPassword(e.target.value);
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (username.length < 5) {
@@ -48,6 +52,8 @@ const SignIn = () => {
       setTimeout(() => {
         setLoading(false);
       }, 2000);
+    } else if (password !== confirmPassword) {
+      console.error("Password and confirmation password do not match");
     } else {
       setUsernameInputErrorOnSubmit("");
       const userData = {
@@ -70,7 +76,12 @@ const SignIn = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("User successfully registered:", data);
-        setLoading(true);
+        setTimeout(() => {
+          setLoading(true);
+          setTimeout(() => {
+            navigate("/login");
+          }, 3000);
+        }, 500);
       } else {
         console.error("Failed to register user");
       }
@@ -79,72 +90,72 @@ const SignIn = () => {
     } finally {
       setTimeout(() => {
         setLoading(false);
-        setTimeout(() => {
-          navigate("/mainscreen");
-        }, 500);
-      }, 3000);
+      });
     }
   };
 
   return (
-    <div className="mainreg">
-      <Bubbles1 />
-      <div className="main__registration">
-        <div className="registration__header">
-          <div className="header__circles">
-            <div className="circles_circle circle_first"></div>
-            <div className="circles_circle circle_second"></div>
-            <div className="circles_circle circle_third"></div>
-          </div>
-        </div>
-        <h1 className="registration_title">Sign In</h1>
-        {loading ? (
-          <div style={{ textAlign: "center", marginTop: "100px" }}>
-            <ClimbingBoxLoader color={"#36D7B7"} loading={loading} size={30} />
-          </div>
-        ) : (
-          <form className="registration__form" onSubmit={handleSubmit}>
-            <div>
-              <input
-                type="text"
-                value={username}
-                onChange={handleUsernameChange}
-                placeholder="Username"
-                required
-                className={usernameInputErrorOnSubmit ? "error" : ""}
+    <MainCard
+      title="Sign Up"
+      main={
+        <div>
+          {loading ? (
+            <div
+              style={{
+                textAlign: "center",
+                marginTop: "100px",
+                marginBottom: "120px",
+              }}
+            >
+              <ClimbingBoxLoader
+                color={"#36D7B7"}
+                loading={loading}
+                size={30}
               />
-              {
-                <p
-                  className="input_login-error"
-                  style={{ color: usernameErrorOnSubmit }}
-                >
-                  {usernameError}
-                </p>
-              }
             </div>
-            <input
-              type="password"
-              value={password}
-              onChange={handlePasswordChange}
-              placeholder="Password"
-              required
-            />
-            <button className="form_button-submit" type="submit">
-              Sign In
-            </button>
-          </form>
-        )}
-      </div>
-      <div>
-        <img
-          className="mainreg_logo"
-          src="src\assets\images\Logo.jpg"
-          alt="Sea Battle main logo"
-        />
-        <Bubbles2 />
-      </div>
-    </div>
+          ) : (
+            <form className="card__registration_form" onSubmit={handleSubmit}>
+              <div>
+                <input
+                  type="text"
+                  value={username}
+                  onChange={handleUsernameChange}
+                  placeholder="Username"
+                  required
+                  className={usernameInputErrorOnSubmit ? "error" : ""}
+                />
+                {
+                  <p
+                    className="input_login-error"
+                    style={{ color: usernameErrorOnSubmit }}
+                  >
+                    {usernameError}
+                  </p>
+                }
+              </div>
+              <input
+                type="password"
+                value={password}
+                onChange={handlePasswordChange}
+                placeholder="Password"
+                required
+              />
+              <input
+                type="password"
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+                placeholder="Confirm Password"
+                required
+              />
+              <button className="card__button" type="submit">
+                Sign Up
+              </button>
+            </form>
+          )}
+        </div>
+      }
+    />
   );
 };
 
-export default SignIn;
+export default SignUp;

@@ -3,17 +3,18 @@ import "./shared/ui/button/button.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import Battleground from "./pages/battleground/Battleground";
+import Login from "./pages/login/Login";
 import MainScreen from "./pages/mainscreen/MainScreen";
 import PlacementShips from "./pages/placement-ships/PlacementShips";
-import SignIn from "./pages/signin/SignIn";
+import SignUp from "./pages/signup/SignUp";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="signin" element={<SignIn />} />
+        <Route path="login" element={<Login />} />
+        <Route path="signup" element={<SignUp />} />
         <Route path="mainscreen" element={<MainScreen />} />
-
         <Route path="battleground" element={<Battleground />} />
         <Route path="placementships" element={<PlacementShips />} />
       </Routes>
