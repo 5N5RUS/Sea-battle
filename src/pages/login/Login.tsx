@@ -57,6 +57,7 @@ const Login = () => {
 
   const signUpUser = async (userData: { login: string; password: string }) => {
     try {
+      setLoading(true);
       const response = await fetch("http://localhost:8080/users/login", {
         method: "POST",
         headers: {
@@ -69,11 +70,7 @@ const Login = () => {
         console.log("User successfully logined:", data);
         setTimeout(() => {
           localStorage.setItem("userId", data.userId);
-          setLoading(true);
-          setTimeout(() => {
-            navigate("/mainscreen");
-          }, 3000);
-        }, 500);
+        });
       } else {
         console.error("Failed to login user");
       }
@@ -81,8 +78,9 @@ const Login = () => {
       console.error("Error login user:", error);
     } finally {
       setTimeout(() => {
-        setLoading(false);
-      });
+        setLoading(true);
+        navigate("/mainscreen");
+      }, 5000);
     }
   };
 
