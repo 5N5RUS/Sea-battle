@@ -66,6 +66,7 @@ const SignUp = () => {
 
   const signUpUser = async (userData: { login: string; password: string }) => {
     try {
+      setLoading(true);
       const response = await fetch("http://localhost:8080/users", {
         method: "POST",
         headers: {
@@ -76,12 +77,7 @@ const SignUp = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("User successfully registered:", data);
-        setTimeout(() => {
-          setLoading(true);
-          setTimeout(() => {
-            navigate("/login");
-          }, 3000);
-        }, 500);
+        navigate("/login");
       } else {
         console.error("Failed to register user");
       }

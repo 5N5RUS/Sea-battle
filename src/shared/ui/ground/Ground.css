@@ -14,6 +14,11 @@
   border: 2px solid white;
 }
 
+.my-grid-item {
+  padding: 20px;
+  border: 2px solid white;
+}
+
 .grid-item:hover {
   cursor: none;
   background: rgb(243.09 165.3 165.3 / 70%);
@@ -23,7 +28,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url("src/assets/svgs/miss.svg");
+  background: rgb(243.09 165.3 165.3 / 70%);
   background-repeat: no-repeat;
   background-position: center;
 }
@@ -49,5 +54,19 @@
 }
 
 .element {
-  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("src/assets/svgs/hit.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.miss {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("src/assets/svgs/miss.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }

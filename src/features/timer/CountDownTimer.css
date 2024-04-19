@@ -16,3 +16,27 @@
   border-radius: 20px;
   box-shadow: 4px 4px 0 #1f1f1f;
 }
+
+.timer__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  background-color: white;
+
+  /* border-right: 4px #1f1f1f solid; */
+  border-radius: 16px;
+}
+
+.timer__icon::after {
+  position: absolute;
+  width: 84px;
+  height: 84px;
+  content: "";
+  border-top: 4px #1f1f1f solid;
+  border-right: 4px #1f1f1f solid;
+  border-bottom: 4px #1f1f1f solid;
+  border-radius: 20px;
+}

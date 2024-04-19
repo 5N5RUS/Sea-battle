@@ -7,6 +7,20 @@
   box-shadow: 4px 4px 0 black;
 }
 
+.back-button:hover {
+  background-color: #f0f0f0;
+}
+
+.back-button:active {
+  box-shadow:
+    4px 4px 0 black,
+    inset 2px 3px 0 #b5b5b5;
+}
+
+#iconchangecolor {
+  fill: white;
+}
+
 .ships-list_battleground {
   display: flex;
   flex-direction: column;
@@ -15,4 +29,10 @@
   font-size: 20px;
   color: white;
   list-style-type: none;
+}
+
+.main__battlegrounds {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
