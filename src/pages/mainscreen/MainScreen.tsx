@@ -3,6 +3,7 @@ import "./MainScreen.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainCard from "src/widgets/main-card/MainCard";
+import { number } from "prop-types";
 
 const MainScreen = () => {
   const userId = localStorage.getItem("userId");

@@ -6,9 +6,44 @@ import Button from "src/shared/ui/button/Button";
 import MyGround from "src/shared/ui/ground/MyGround";
 import Layout from "src/shared/ui/layout/Layout";
 
-import Ground from "../../shared/ui/ground/Ground";
+import Ground, { Block } from "../../shared/ui/ground/Ground";
+import { useEffect, useState } from "react";
+import { getGameState } from "src/entities/game/gameApi";
+
+export type gameStateType = {
+  id: number,
+  createDate: Date,
+  winnerId: number,
+  turnPlayerId: number,
+  gameState: string,
+  userFirst: number,
+  userSecond: number,
+  arrangementStartDate: Date,
+  startGameDate: Date,
+  playerTurnStartDate: Date,
+  targetCell: {
+    axis: number,
+    ordinate: number
+  }
+}
 
 const Battleground = () => {
+  const [objectsShipBlock, setObjectsShipBlock] = useState<Block[]>([]);
+  const sessionId = Number(localStorage.getItem("sessionId"));
+  const [gameState, setGameState] = useState<gameStateType>();
+  const userId = Number(localStorage.getItem("userId"));
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (sessionId) {
+        const getStateProm = getGameState(sessionId);
+        getStateProm.then((res) => {
+          setGameState(res);
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [sessionId]);
   const navigate = useNavigate();
   return (
     <Layout
@@ -27,7 +62,7 @@ const Battleground = () => {
         </Button>
       }
       timer={<CountDownTimer minutes={1} seconds={0} />}
-      text={<p className="player-turn">Your turn</p>}
+      text={<p className="player-turn">{gameState?.turnPlayerId == userId ? "Your turn" : "Enemy's turn"}</p>}
       help_button={
         <Button
           className="rules-button"
@@ -44,8 +79,11 @@ const Battleground = () => {
         <MyGround img_src="src/assets/svgs/my-player.svg" text="Your ships" />
 
         <Ground
+          gameState={gameState}
           img_src="src/assets/svgs/enemy-player.svg"
           text="Enemy’s ships"
+          objectsShipBlock={objectsShipBlock}
+          setObjectsShipBlock={setObjectsShipBlock}
         />
       </div>
 

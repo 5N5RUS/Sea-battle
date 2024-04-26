@@ -1,54 +1,61 @@
 import { useEffect, useState } from "react";
+import { gameStateType } from "src/pages/battleground/Battleground";
 
 type GroundProps = {
   text?: string;
   img_src?: string;
+  gameState: gameStateType | undefined;
+  objectsShipBlock: Block[]
+  setObjectsShipBlock: React.Dispatch<React.SetStateAction<Block[]>>
 };
 
-interface Block {
+export interface Block {
   key: string;
   className: string;
 }
 
-const Ground = ({ text, img_src }: GroundProps) => {
-  const [objectsShipBlock, setObjectsShipBlock] = useState<Block[]>([]);
-  const [sessionId, setSessionId] = useState("");
-  const userId = localStorage.getItem("userId");
+const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBlock }: GroundProps) => {
+
+  const [sessionId, setSessionId] = useState<number>();
+  const userId = Number(localStorage.getItem("userId"));
+  const [myTurn, setMyTurn] = useState(false);
 
   const handleBlockClick = async (key: string) => {
-    try {
-      const { axis, ordinate } = JSON.parse(key);
-      const response = await fetch(
-        `http://localhost:8080/session/${sessionId}/turn/${userId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+    if (myTurn) {
+      try {
+        const { axis, ordinate } = JSON.parse(key);
+        const response = await fetch(
+          `http://localhost:8080/session/${sessionId}/turn/${userId}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ axis, ordinate }),
           },
-          body: JSON.stringify({ axis, ordinate }),
-        },
-      );
-      const data = await response.json();
-      if (data.result === "catch" || data.result === "killed") {
-        console.log("catch");
-        const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
-          block.key === key ? { ...block, className: "element" } : block,
         );
-        setObjectsShipBlock(updatedObjectsShipBlock);
-      } else if (data.result === "Already attacked") {
-        console.log("Already attacked");
-      } else {
-        const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
-          block.key === key ? { ...block, className: "miss" } : block,
-        );
-        setObjectsShipBlock(updatedObjectsShipBlock);
+        const data = await response.json();
+        if (data.result === "catch" || data.result === "killed") {
+          console.log("catch");
+          const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
+            block.key === key ? { ...block, className: "element" } : block,
+          );
+          setObjectsShipBlock(updatedObjectsShipBlock);
+        } else if (data.result === "Already attacked") {
+          console.log("Already attacked");
+        } else {
+          const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
+            block.key === key ? { ...block, className: "miss" } : block,
+          );
+          setObjectsShipBlock(updatedObjectsShipBlock);
+        }
+      } catch (error) {
+        console.error("Error making a turn:", error);
+        console.log(error);
       }
-    } catch (error) {
-      console.error("Error making a turn:", error);
-      console.log(error);
+      setMyTurn(false);
     }
   };
-
   useEffect(() => {
     const blocks: Block[] = [];
     for (let i = 1; i <= 10; i++) {
@@ -58,12 +65,19 @@ const Ground = ({ text, img_src }: GroundProps) => {
       }
     }
     setObjectsShipBlock(blocks);
-
-    const storedSessionId = localStorage.getItem("sessionId");
+  }, []);
+  useEffect(() => {
+    if (gameState?.turnPlayerId == userId) {
+      setMyTurn(true);
+    } else {
+      setMyTurn(false);
+    }
+    const storedSessionId = Number(localStorage.getItem("sessionId"));
     if (storedSessionId) {
       setSessionId(storedSessionId);
     }
-  }, [sessionId, userId]);
+  }, [sessionId, userId, gameState]);
+
 
   return (
     <>

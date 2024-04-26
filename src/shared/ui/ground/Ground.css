@@ -34,6 +34,7 @@
 }
 
 .ground-wrapper {
+  cursor: none;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -49,9 +49,7 @@ const SignUp = () => {
     if (username.length < 5) {
       setUsernameInputErrorOnSubmit("#EB9E9E");
       setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
+      setLoading(false);
     } else if (password !== confirmPassword) {
       console.error("Password and confirmation password do not match");
     } else {
