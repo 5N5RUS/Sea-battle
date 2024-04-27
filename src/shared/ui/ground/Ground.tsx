@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { gameStateType } from "src/pages/battleground/Battleground";
+import ModalWindow from "src/shared/ui/modal-window/ModalWindow";
+import { getUserData } from "src/entities/user/userApi";
 
 type GroundProps = {
   text?: string;
@@ -9,17 +11,22 @@ type GroundProps = {
   setObjectsShipBlock: React.Dispatch<React.SetStateAction<Block[]>>
 };
 
+export type userDataType = {
+  id: number,
+  login: string,
+  rating: number
+}
+
 export interface Block {
   key: string;
   className: string;
 }
 
 const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBlock }: GroundProps) => {
-
+  const [userData, setUserData] = useState<userDataType>();
   const [sessionId, setSessionId] = useState<number>();
   const userId = Number(localStorage.getItem("userId"));
   const [myTurn, setMyTurn] = useState(false);
-
   const handleBlockClick = async (key: string) => {
     if (myTurn) {
       try {
@@ -67,6 +74,10 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
     setObjectsShipBlock(blocks);
   }, []);
   useEffect(() => {
+    getUserData(userId)
+      .then((res: userDataType) => {
+        setUserData(res);
+      });
     if (gameState?.turnPlayerId == userId) {
       setMyTurn(true);
     } else {
@@ -78,9 +89,13 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
     }
   }, [sessionId, userId, gameState]);
 
-
+  if (!gameState) {
+    return null;
+  }
   return (
     <>
+      {gameState?.gameState === "STATUS_FINISH" ?
+        <ModalWindow winnerId={gameState.winnerId} scores={userData?.rating} /> : null}
       <div className="ground-wrapper">
         <div className="grid-container">
           {objectsShipBlock.map((block) => (
@@ -105,6 +120,7 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
       </div>
     </>
   );
+
 };
 
 export default Ground;

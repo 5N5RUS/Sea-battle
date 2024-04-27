@@ -75,10 +75,8 @@ const Login = () => {
     } catch (error) {
       console.error("Error login user:", error);
     } finally {
-      setTimeout(() => {
-        setLoading(true);
-        navigate("/mainscreen");
-      }, 5000);
+      setLoading(true);
+      navigate("/mainscreen");
     }
   };
 
