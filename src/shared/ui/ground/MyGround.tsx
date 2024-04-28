@@ -3,9 +3,17 @@ import React, { useEffect, useState } from "react";
 import { maxValue, minValue } from "src/util/checkValueFunc";
 
 
+export type targetCellType = {
+  axis: number,
+  ordinate: number
+}
+
 type GroundProps = {
   text?: string;
   img_src?: string;
+  targetCell: targetCellType | undefined;
+  isMyTurn: boolean
+  targetPlayer: number | undefined
 };
 
 
@@ -25,9 +33,10 @@ export function checkAddClass(num: number) {
   }
 }
 
-const MyGround = ({ text, img_src }: GroundProps) => {
+const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
     const [objects, setObjects] = useState<React.ReactNode[]>([]);
     const myShipsString = localStorage.getItem("myShips");
+    const playerId = Number(localStorage.getItem("userId"));
     useEffect(() => {
       if (myShipsString) {
         const changedObject = objects;
@@ -46,8 +55,6 @@ const MyGround = ({ text, img_src }: GroundProps) => {
               size = checkAddClass(maxValue(coordsList[0].axis, coordsList[1].axis) - minValue(coordsList[0].axis, coordsList[1].axis) + 1);
               number = checkAddClass(counter);
               const clazz = "vertical-" + size + "-" + number;
-              console.log(number);
-              console.log(clazz);
               changedObject[index] = (
                 <div key={JSON.stringify({ axis: (i - 1) * 10 - 1, ordinate: coordsList[0].ordinate })}
                      className={`my-grid-item ${clazz}`}>
@@ -87,15 +94,54 @@ const MyGround = ({ text, img_src }: GroundProps) => {
           if (!changedObject.at(i)) {
             changedObject[i] =
               (
-                <div key={JSON.stringify({ axis: i % 10 * 100, ordinate: Math.floor(i / 10) * 100 })}
+                <div key={JSON.stringify({ axis: Math.floor(i / 10) * 10, ordinate: i % 10 * 10 })}
                      className="my-grid-item">
                 </div>
               );
           }
         }
+
         setObjects(changedObject);
       }
     }, []);
+    useEffect(() => {
+        const changedObject = objects;
+        if (targetPlayer == playerId && targetCell) {
+          if (changedObject[(targetCell?.axis - 1) * 10 + targetCell.ordinate - 1]) {
+            const oldClass = (changedObject[(targetCell?.axis - 1) * 10 + targetCell.ordinate - 1]?.valueOf().props.className);
+            const splited = oldClass.split(" ");
+            if (!(splited.includes("explose"))) {
+              if (splited[1] == undefined) {
+                changedObject[(targetCell?.axis - 1) * 10 + targetCell.ordinate - 1] = (
+                  <div className={`${oldClass} miss`}
+                       key={JSON.stringify({
+                         axis: 900 * playerId - targetCell?.axis * 20,
+                         ordinate: targetCell.ordinate * 20,
+                       })}>
+                  </div>
+                );
+              } else {
+                if (!splited.includes("miss")) {
+                  changedObject[(targetCell?.axis - 1) * 10 + targetCell.ordinate - 1] = (
+                    <div className={`${oldClass}`}
+                         key={JSON.stringify({
+                           axis: 900 * playerId - targetCell?.axis * 30,
+                           ordinate: targetCell.ordinate * 30,
+                         })}>
+                      <div className={`explose`}>
+                      </div>
+                    </div>
+                  );
+                }
+              }
+              ;
+            }
+          }
+        }
+        setObjects(changedObject);
+      }, [targetCell],
+    )
+    ;
     return (
       <>
         <div className="ground-wrapper">

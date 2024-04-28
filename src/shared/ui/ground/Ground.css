@@ -15,6 +15,9 @@
 }
 
 .my-grid-item {
+    display: flex;
+    place-content: center center;
+    align-items: center;
     padding: 20px;
     border: 2px solid white;
 }
@@ -156,6 +159,17 @@
 
 .one-one {
     background-image: url("src/assets/images/ships/one/first.png");
+    background-repeat: no-repeat;
+    background-position-y: 50%;
+    background-size: 100%;
+}
+
+.explose {
+    position: absolute;
+    z-index: 100;
+    width: 50px;
+    height: 50px;
+    background-image: url("src/assets/images/ships/explose.png");
     background-repeat: no-repeat;
     background-position-y: 50%;
     background-size: 100%;
