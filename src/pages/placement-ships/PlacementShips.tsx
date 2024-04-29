@@ -7,10 +7,40 @@ import CountDownTimer from "src/features/timer/CountDownTimer";
 import Button from "src/shared/ui/button/Button";
 import Layout from "src/shared/ui/layout/Layout";
 
-import Ground from "../../shared/ui/ground/Ground";
+import Ground, { Block } from "../../shared/ui/ground/Ground";
+import { arrangeShips, getGameState } from "src/entities/game/gameApi";
+import { useEffect, useState } from "react";
+import { gameStateType } from "src/pages/battleground/Battleground";
+import { mockedShipCoords } from "src/pages/pendingWindow/mockedShips";
 
+
+export type shipsType = { axis: number, ordinate: number }[][]
 const PlacementShips = () => {
+  const [objectsShipBlock, setObjectsShipBlock] = useState<Block[]>([]);
   const navigate = useNavigate();
+  const playerId = Number(localStorage.getItem("userId"));
+  const sessionId = Number(localStorage.getItem("sessionId"));
+  const [gameState, setGameState] = useState<gameStateType>();
+  useEffect(() => {
+    arrangeShips(sessionId, playerId, mockedShipCoords);
+    localStorage.setItem("myShips", JSON.stringify(mockedShipCoords));
+    const intervalId = setInterval(() => {
+      if (sessionId) {
+        const getStateProm = getGameState(sessionId);
+        getStateProm.then((res) => {
+          setGameState(res);
+        });
+      }
+    }, 1000);
+    return () => clearInterval(intervalId);
+
+  }, [sessionId]);
+
+  useEffect(() => {
+    if (gameState?.gameState === "STATUS_GAME") {
+      navigate("/battleground");
+    }
+  }, [gameState]);
   return (
     <Layout
       back_button={
@@ -37,12 +67,15 @@ const PlacementShips = () => {
                 d="M0 0h24v24H0z"
                 id="mainIconPathAttribute"
                 filter="url(#shadow)"
-              ></path>{" "}
+              ></path>
+              {" "}
               <path
                 d="M5.828 7l2.536 2.536L6.95 10.95 2 6l4.95-4.95 1.414 1.414L5.828 5H13a8 8 0 1 1 0 16H4v-2h9a6 6 0 1 0 0-12H5.828z"
                 id="mainIconPathAttribute"
-              ></path>{" "}
-            </g>{" "}
+              ></path>
+              {" "}
+            </g>
+            {" "}
             <filter id="shadow">
               <feDropShadow
                 id="shadowValue"
@@ -116,7 +149,9 @@ const PlacementShips = () => {
             ship_count={4}
           />
         </li>
-        <Ground />
+        <Ground gameState={gameState} setObjectsShipBlock={setObjectsShipBlock} objectsShipBlock={objectsShipBlock}
+                text={"My ships"}
+                img_src={"src/assets/svgs/enemy-player.svg"} />
         <Button className="reset-button">Reset</Button>
       </div>
     </Layout>

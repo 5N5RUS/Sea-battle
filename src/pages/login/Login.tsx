@@ -42,9 +42,7 @@ const Login = () => {
     if (username.length < 5) {
       setUsernameInputErrorOnSubmit("#EB9E9E");
       setLoading(true);
-      setTimeout(() => {
-        setLoading(false);
-      }, 2000);
+      setLoading(false);
     } else {
       setUsernameInputErrorOnSubmit("");
       const userData = {
@@ -77,10 +75,8 @@ const Login = () => {
     } catch (error) {
       console.error("Error login user:", error);
     } finally {
-      setTimeout(() => {
-        setLoading(true);
-        navigate("/mainscreen");
-      }, 5000);
+      setLoading(true);
+      navigate("/mainscreen");
     }
   };
 

@@ -1,54 +1,79 @@
 import { useEffect, useState } from "react";
+import { gameStateType } from "src/pages/battleground/Battleground";
+import ModalWindow from "src/shared/ui/modal-window/ModalWindow";
+import { getUserData } from "src/entities/user/userApi";
 
 type GroundProps = {
   text?: string;
   img_src?: string;
+  gameState: gameStateType | undefined;
+  objectsShipBlock: Block[]
+  setObjectsShipBlock: React.Dispatch<React.SetStateAction<Block[]>>
 };
 
-interface Block {
+export type userDataType = {
+  id: number,
+  login: string,
+  rating: number
+}
+
+export interface Block {
   key: string;
   className: string;
 }
 
-const Ground = ({ text, img_src }: GroundProps) => {
-  const [objectsShipBlock, setObjectsShipBlock] = useState<Block[]>([]);
-  const [sessionId, setSessionId] = useState("");
-  const userId = localStorage.getItem("userId");
-
+const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBlock }: GroundProps) => {
+  const [userData, setUserData] = useState<userDataType>();
+  const [sessionId, setSessionId] = useState<number>();
+  const userId = Number(localStorage.getItem("userId"));
+  const [myTurn, setMyTurn] = useState(false);
   const handleBlockClick = async (key: string) => {
-    try {
-      const { axis, ordinate } = JSON.parse(key);
-      const response = await fetch(
-        `http://localhost:8080/session/${sessionId}/turn/${userId}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+    if (myTurn) {
+      try {
+        const { axis, ordinate } = JSON.parse(key);
+        const response = await fetch(
+          `http://localhost:8080/session/${sessionId}/turn/${userId}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ axis, ordinate }),
           },
-          body: JSON.stringify({ axis, ordinate }),
-        },
-      );
-      const data = await response.json();
-      if (data.result === "catch" || data.result === "killed") {
-        console.log("catch");
-        const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
-          block.key === key ? { ...block, className: "element" } : block,
         );
-        setObjectsShipBlock(updatedObjectsShipBlock);
-      } else if (data.result === "Already attacked") {
-        console.log("Already attacked");
-      } else {
-        const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
-          block.key === key ? { ...block, className: "miss" } : block,
-        );
-        setObjectsShipBlock(updatedObjectsShipBlock);
+        const data = await response.json();
+        if (data.result === "catch" || data.result === "killed") {
+          if (data.result == "catch") {
+            const field = objectsShipBlock;
+            let a = { axis: axis, ordinate: ordinate };
+            let size = 0;
+            while (a.ordinate != 100) {
+              if (field[(a.axis - 1) * 10 + a.ordinate].className == "element") {
+                console.log("TES");
+                a.ordinate = 100;
+              }
+            }
+          }
+          const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
+            block.key === key ? { ...block, className: "element" } : block,
+          );
+          console.log(updatedObjectsShipBlock);
+          setObjectsShipBlock(updatedObjectsShipBlock);
+        } else if (data.result === "Already attacked") {
+          console.log("Already attacked");
+        } else {
+          const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
+            block.key === key ? { ...block, className: "miss" } : block,
+          );
+          setObjectsShipBlock(updatedObjectsShipBlock);
+        }
+      } catch (error) {
+        console.error("Error making a turn:", error);
+        console.log(error);
       }
-    } catch (error) {
-      console.error("Error making a turn:", error);
-      console.log(error);
+      setMyTurn(false);
     }
   };
-
   useEffect(() => {
     const blocks: Block[] = [];
     for (let i = 1; i <= 10; i++) {
@@ -58,15 +83,30 @@ const Ground = ({ text, img_src }: GroundProps) => {
       }
     }
     setObjectsShipBlock(blocks);
-
-    const storedSessionId = localStorage.getItem("sessionId");
+  }, []);
+  useEffect(() => {
+    getUserData(userId)
+      .then((res: userDataType) => {
+        setUserData(res);
+      });
+    if (gameState?.turnPlayerId == userId) {
+      setMyTurn(true);
+    } else {
+      setMyTurn(false);
+    }
+    const storedSessionId = Number(localStorage.getItem("sessionId"));
     if (storedSessionId) {
       setSessionId(storedSessionId);
     }
-  }, [sessionId, userId]);
+  }, [sessionId, userId, gameState]);
 
+  if (!gameState) {
+    return null;
+  }
   return (
     <>
+      {gameState?.gameState === "STATUS_FINISH" ?
+        <ModalWindow winnerId={gameState.winnerId} scores={userData?.rating} /> : null}
       <div className="ground-wrapper">
         <div className="grid-container">
           {objectsShipBlock.map((block) => (
@@ -91,6 +131,7 @@ const Ground = ({ text, img_src }: GroundProps) => {
       </div>
     </>
   );
+
 };
 
 export default Ground;
