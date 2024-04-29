@@ -43,10 +43,21 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
         );
         const data = await response.json();
         if (data.result === "catch" || data.result === "killed") {
-          console.log("catch");
+          if (data.result == "catch") {
+            const field = objectsShipBlock;
+            let a = { axis: axis, ordinate: ordinate };
+            let size = 0;
+            while (a.ordinate != 100) {
+              if (field[(a.axis - 1) * 10 + a.ordinate].className == "element") {
+                console.log("TES");
+                a.ordinate = 100;
+              }
+            }
+          }
           const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
             block.key === key ? { ...block, className: "element" } : block,
           );
+          console.log(updatedObjectsShipBlock);
           setObjectsShipBlock(updatedObjectsShipBlock);
         } else if (data.result === "Already attacked") {
           console.log("Already attacked");
