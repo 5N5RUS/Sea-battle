@@ -1,6 +1,6 @@
-import { gameStateType } from "@/pages/battleground/Battleground";
-import { number } from "prop-types";
 import { shipsType } from "src/pages/placement-ships/PlacementShips";
+
+import { gameStateType } from "@/pages/battleground/Battleground";
 
 export function getGameState(gameId: number): Promise<gameStateType> {
   return fetch(`http://localhost:8080/session/${gameId}`, {
@@ -18,7 +18,11 @@ export function deleteSession(sessionId: number): void {
   });
 }
 
-export function arrangeShips(gameId: number, playerId: number, shipCoords: shipsType): void {
+export function arrangeShips(
+  gameId: number,
+  playerId: number,
+  shipCoords: shipsType,
+): void {
   fetch(`http://localhost:8080/session/${gameId}/arrangement/${playerId}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

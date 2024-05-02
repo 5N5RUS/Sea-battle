@@ -1,33 +1,33 @@
 import "./Battleground.css";
 
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getGameState } from "src/entities/game/gameApi";
 import CountDownTimer from "src/features/timer/CountDownTimer";
 import Button from "src/shared/ui/button/Button";
 import MyGround, { targetCellType } from "src/shared/ui/ground/MyGround";
 import Layout from "src/shared/ui/layout/Layout";
 
 import Ground, { Block } from "../../shared/ui/ground/Ground";
-import { useEffect, useState } from "react";
-import { getGameState } from "src/entities/game/gameApi";
 
 export type gameStateType = {
-  id: number,
-  createDate: Date,
-  winnerId: number,
-  targetPlayer: number
-  turnPlayerId: number,
-  gameState: string,
-  userFirst: number,
-  userSecond: number,
-  arrangementStartDate: Date,
-  startGameDate: Date,
-  playerTurnStartDate: Date,
-  playerTurnCoords: { axis: number, ordinate: number }
+  id: number;
+  createDate: Date;
+  winnerId: number;
+  targetPlayer: number;
+  turnPlayerId: number;
+  gameState: string;
+  userFirst: number;
+  userSecond: number;
+  arrangementStartDate: Date;
+  startGameDate: Date;
+  playerTurnStartDate: Date;
+  playerTurnCoords: { axis: number; ordinate: number };
   targetCell: {
-    axis: number,
-    ordinate: number
-  }
-}
+    axis: number;
+    ordinate: number;
+  };
+};
 
 const Battleground = () => {
   const [objectsShipBlock, setObjectsShipBlock] = useState<Block[]>([]);
@@ -53,7 +53,7 @@ const Battleground = () => {
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [sessionId]);
+  }, [sessionId, userId]);
   const navigate = useNavigate();
   return (
     <Layout
@@ -72,7 +72,11 @@ const Battleground = () => {
         </Button>
       }
       timer={<CountDownTimer minutes={1} seconds={0} />}
-      text={<p className="player-turn">{gameState?.turnPlayerId == userId ? "Your turn" : "Enemy's turn"}</p>}
+      text={
+        <p className="player-turn">
+          {gameState?.turnPlayerId == userId ? "Your turn" : "Enemy's turn"}
+        </p>
+      }
       help_button={
         <Button
           className="rules-button"
@@ -86,8 +90,13 @@ const Battleground = () => {
       }
     >
       <div className="main__battlegrounds">
-        <MyGround img_src="src/assets/svgs/my-player.svg" text="Your ships" isMyTurn={isMyTurn}
-                  targetCell={targetCell} targetPlayer={targetPlayer} />
+        <MyGround
+          img_src="src/assets/svgs/my-player.svg"
+          text="Your ships"
+          isMyTurn={isMyTurn}
+          targetCell={targetCell}
+          targetPlayer={targetPlayer}
+        />
 
         <Ground
           gameState={gameState}
@@ -162,41 +171,45 @@ const Battleground = () => {
         >
           — 4
         </div>
-        <div className={"full-one"}
-             style={{
-               width: 46,
-               height: 46,
-               left: 297,
-               top: 64,
-               position: "absolute",
-             }}
+        <div
+          className={"full-one"}
+          style={{
+            width: 46,
+            height: 46,
+            left: 297,
+            top: 64,
+            position: "absolute",
+          }}
         />
-        <div className={"full-two"}
-             style={{
-               width: 94,
-               height: 46,
-               left: 297,
-               top: 1,
-               position: "absolute",
-             }}
+        <div
+          className={"full-two"}
+          style={{
+            width: 94,
+            height: 46,
+            left: 297,
+            top: 1,
+            position: "absolute",
+          }}
         />
-        <div className={"full-four"}
-             style={{
-               width: 190,
-               height: 46,
-               left: 0,
-               top: 0,
-               position: "absolute",
-             }}
+        <div
+          className={"full-four"}
+          style={{
+            width: 190,
+            height: 46,
+            left: 0,
+            top: 0,
+            position: "absolute",
+          }}
         />
-        <div className={"full-three"}
-             style={{
-               width: 142,
-               height: 46,
-               left: 0,
-               top: 65,
-               position: "absolute",
-             }}
+        <div
+          className={"full-three"}
+          style={{
+            width: 142,
+            height: 46,
+            left: 0,
+            top: 65,
+            position: "absolute",
+          }}
         />
       </div>
     </Layout>

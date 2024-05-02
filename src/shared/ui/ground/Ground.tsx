@@ -1,28 +1,34 @@
 import { useEffect, useState } from "react";
+import { getUserData } from "src/entities/user/userApi";
 import { gameStateType } from "src/pages/battleground/Battleground";
 import ModalWindow from "src/shared/ui/modal-window/ModalWindow";
-import { getUserData } from "src/entities/user/userApi";
 
 type GroundProps = {
   text?: string;
   img_src?: string;
   gameState: gameStateType | undefined;
-  objectsShipBlock: Block[]
-  setObjectsShipBlock: React.Dispatch<React.SetStateAction<Block[]>>
+  objectsShipBlock: Block[];
+  setObjectsShipBlock: React.Dispatch<React.SetStateAction<Block[]>>;
 };
 
 export type userDataType = {
-  id: number,
-  login: string,
-  rating: number
-}
+  id: number;
+  login: string;
+  rating: number;
+};
 
 export interface Block {
   key: string;
   className: string;
 }
 
-const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBlock }: GroundProps) => {
+const Ground = ({
+  text,
+  img_src,
+  gameState,
+  objectsShipBlock,
+  setObjectsShipBlock,
+}: GroundProps) => {
   const [userData, setUserData] = useState<userDataType>();
   const [sessionId, setSessionId] = useState<number>();
   const userId = Number(localStorage.getItem("userId"));
@@ -45,10 +51,11 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
         if (data.result === "catch" || data.result === "killed") {
           if (data.result == "catch") {
             const field = objectsShipBlock;
-            let a = { axis: axis, ordinate: ordinate };
-            let size = 0;
+            const a = { axis: axis, ordinate: ordinate };
             while (a.ordinate != 100) {
-              if (field[(a.axis - 1) * 10 + a.ordinate].className == "element") {
+              if (
+                field[(a.axis - 1) * 10 + a.ordinate].className == "element"
+              ) {
                 console.log("TES");
                 a.ordinate = 100;
               }
@@ -83,12 +90,11 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
       }
     }
     setObjectsShipBlock(blocks);
-  }, []);
+  }, [setObjectsShipBlock]);
   useEffect(() => {
-    getUserData(userId)
-      .then((res: userDataType) => {
-        setUserData(res);
-      });
+    getUserData(userId).then((res: userDataType) => {
+      setUserData(res);
+    });
     if (gameState?.turnPlayerId == userId) {
       setMyTurn(true);
     } else {
@@ -105,8 +111,9 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
   }
   return (
     <>
-      {gameState?.gameState === "STATUS_FINISH" ?
-        <ModalWindow winnerId={gameState.winnerId} scores={userData?.rating} /> : null}
+      {gameState?.gameState === "STATUS_FINISH" ? (
+        <ModalWindow winnerId={gameState.winnerId} scores={userData?.rating} />
+      ) : null}
       <div className="ground-wrapper">
         <div className="grid-container">
           {objectsShipBlock.map((block) => (
@@ -131,7 +138,6 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
       </div>
     </>
   );
-
 };
 
 export default Ground;

@@ -1,176 +1,175 @@
 .grid-container {
-    display: grid;
-    grid-template-rows: repeat(10, 48px);
-    grid-template-columns: repeat(10, 48px);
-    width: 480px;
-    height: 480px;
-    background: url("src/assets/images/Sea-ground.png");
-    border: 4px #2c2c2c solid;
-    box-shadow: 0 4px 0 #1f1f1f;
+  display: grid;
+  grid-template-rows: repeat(10, 48px);
+  grid-template-columns: repeat(10, 48px);
+  width: 480px;
+  height: 480px;
+  background: url("src/assets/images/Sea-ground.png");
+  border: 4px #2c2c2c solid;
+  box-shadow: 0 4px 0 #1f1f1f;
 }
 
 .grid-item {
-    padding: 20px;
-    border: 2px solid white;
+  padding: 20px;
+  border: 2px solid white;
 }
 
 .my-grid-item {
-    display: flex;
-    place-content: center center;
-    align-items: center;
-    padding: 20px;
-    border: 2px solid white;
+  display: flex;
+  place-content: center center;
+  align-items: center;
+  padding: 20px;
+  border: 2px solid white;
 }
 
 .grid-item:hover {
-    cursor: none;
-    background: rgb(243.09 165.3 165.3 / 70%);
+  cursor: none;
+  background: rgb(243.09 165.3 165.3 / 70%);
 }
 
 .grid-item:active {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgb(243.09 165.3 165.3 / 70%);
-    background-repeat: no-repeat;
-    background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgb(243.09 165.3 165.3 / 70%);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .ground-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: none;
 }
 
 .ground__name {
-    margin-top: 10px;
-    margin-left: 20px;
-    font-size: 35px;
-    font-weight: 700;
-    color: #2c2c2c;
-    text-transform: uppercase;
+  margin-top: 10px;
+  margin-left: 20px;
+  font-size: 35px;
+  font-weight: 700;
+  color: #2c2c2c;
+  text-transform: uppercase;
 }
 
 .ground__name_wrapper {
-    display: flex;
-    margin-top: 20px;
+  display: flex;
+  margin-top: 20px;
 }
 
 .element {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: url("src/assets/svgs/hit.svg");
-    background-repeat: no-repeat;
-    background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("src/assets/svgs/hit.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .miss {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: url("src/assets/svgs/miss.svg");
-    background-repeat: no-repeat;
-    background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url("src/assets/svgs/miss.svg");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .vertical-two-one {
-    background-image: url("src/assets/images/ships/two/first.png");
-    transform: rotate(90deg);
+  background-image: url("src/assets/images/ships/two/first.png");
+  transform: rotate(90deg);
 }
 
 .vertical-two-two {
-    background-image: url("src/assets/images/ships/two/second.png");
-    transform: rotate(90deg);
+  background-image: url("src/assets/images/ships/two/second.png");
+  transform: rotate(90deg);
 }
 
 .vertical-three-one {
-    background-image: url("src/assets/images/ships/three/first.png");
-    transform: rotate(90deg);
+  background-image: url("src/assets/images/ships/three/first.png");
+  transform: rotate(90deg);
 }
 
 .vertical-three-two {
-    background-image: url("src/assets/images/ships/three/second.png");
-    transform: rotate(90deg);
+  background-image: url("src/assets/images/ships/three/second.png");
+  transform: rotate(90deg);
 }
 
 .vertical-three-three {
-    background-image: url("src/assets/images/ships/three/third.png");
-    transform: rotate(90deg);
+  background-image: url("src/assets/images/ships/three/third.png");
+  transform: rotate(90deg);
 }
 
 .vertical-fourth-one {
-    background-image: url("src/assets/images/ships/four/first.png");
-    transform: rotate(90deg);
+  background-image: url("src/assets/images/ships/four/first.png");
+  transform: rotate(90deg);
 }
 
 .vertical-four-two {
-    background-image: url("src/assets/images/ships/four/second.png");
-    transform: rotate(90deg);
+  background-image: url("src/assets/images/ships/four/second.png");
+  transform: rotate(90deg);
 }
 
 .vertical-four-three {
-    background-image: url("src/assets/images/ships/four/third.png");
-    transform: rotate(90deg);
+  background-image: url("src/assets/images/ships/four/third.png");
+  transform: rotate(90deg);
 }
 
 .vertical-four-four {
-    background-image: url("src/assets/images/ships/four/fourh.png");
-    transform: rotate(90deg);
+  background-image: url("src/assets/images/ships/four/fourh.png");
+  transform: rotate(90deg);
 }
 
 .horizontal-two-one {
-    background-image: url("src/assets/images/ships/two/first.png");
+  background-image: url("src/assets/images/ships/two/first.png");
 }
 
 .horizontal-two-two {
-    background-image: url("src/assets/images/ships/two/second.png");
+  background-image: url("src/assets/images/ships/two/second.png");
 }
 
 .horizontal-three-one {
-    background-image: url("src/assets/images/ships/three/first.png");
+  background-image: url("src/assets/images/ships/three/first.png");
 }
 
 .horizontal-three-two {
-    background-image: url("src/assets/images/ships/three/second.png");
+  background-image: url("src/assets/images/ships/three/second.png");
 }
 
 .horizontal-three-three {
-    background-image: url("src/assets/images/ships/three/third.png");
+  background-image: url("src/assets/images/ships/three/third.png");
 }
 
-
 .horizontal-four-one {
-    background-image: url("src/assets/images/ships/four/first.png");
+  background-image: url("src/assets/images/ships/four/first.png");
 }
 
 .horizontal-four-two {
-    background-image: url("src/assets/images/ships/four/second.png");
+  background-image: url("src/assets/images/ships/four/second.png");
 }
 
 .horizontal-four-three {
-    background-image: url("src/assets/images/ships/four/third.png");
+  background-image: url("src/assets/images/ships/four/third.png");
 }
 
 .horizontal-four-four {
-    background-image: url("src/assets/images/ships/four/fourh.png");
+  background-image: url("src/assets/images/ships/four/fourh.png");
 }
 
 .one-one {
-    background-image: url("src/assets/images/ships/one/first.png");
-    background-repeat: no-repeat;
-    background-position-y: 50%;
-    background-size: 100%;
+  background-image: url("src/assets/images/ships/one/first.png");
+  background-repeat: no-repeat;
+  background-position-y: 50%;
+  background-size: 100%;
 }
 
 .explose {
-    position: absolute;
-    z-index: 100;
-    width: 50px;
-    height: 50px;
-    background-image: url("src/assets/images/ships/explose.png");
-    background-repeat: no-repeat;
-    background-position-y: 50%;
-    background-size: 100%;
+  position: absolute;
+  z-index: 100;
+  width: 50px;
+  height: 50px;
+  background-image: url("src/assets/images/ships/explose.png");
+  background-repeat: no-repeat;
+  background-position-y: 50%;
+  background-size: 100%;
 }

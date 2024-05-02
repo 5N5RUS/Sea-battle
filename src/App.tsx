@@ -1,13 +1,13 @@
 import "./shared/ui/button/button.css";
 
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import PendingWindow from "src/pages/pendingWindow/PendingWindow";
 
 import Battleground from "./pages/battleground/Battleground";
 import Login from "./pages/login/Login";
 import MainScreen from "./pages/mainscreen/MainScreen";
 import PlacementShips from "./pages/placement-ships/PlacementShips";
 import SignUp from "./pages/signup/SignUp";
-import PendingWindow from "src/pages/pendingWindow/PendingWindow";
 
 function App() {
   return (
