@@ -32,7 +32,6 @@ const MainScreen = () => {
         localStorage.setItem("sessionId", data.id);
         if (data.gameState) {
           if (data.gameState === "STATUS_PENDING") {
-            console.log("HERE");
             navigate("/pendingWindow");
           } else {
             navigate("/placementships");

@@ -24,12 +24,12 @@ export interface Block {
 }
 
 const Ground = ({
-  text,
-  img_src,
-  gameState,
-  objectsShipBlock,
-  setObjectsShipBlock,
-}: GroundProps) => {
+                  text,
+                  img_src,
+                  gameState,
+                  objectsShipBlock,
+                  setObjectsShipBlock,
+                }: GroundProps) => {
   const [userData, setUserData] = useState<userDataType>();
   const [sessionId, setSessionId] = useState<number>();
   const userId = Number(localStorage.getItem("userId"));
@@ -56,6 +56,30 @@ const Ground = ({
             const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
               block.key === key ? { ...block, className: "element" } : block,
             );
+            console.log(updatedObjectsShipBlock);
+            if (data.result == "killed") {
+              const field = objectsShipBlock;
+              let startCoords = { axis: axis, ordinate: ordinate };
+              let coords = startCoords;
+              let size = 1;
+              let flag = false;
+              while (!flag) {
+                console.log("Y = " + coords.axis);
+                console.log("X = " + coords.ordinate);
+                console.log("CURR SIZE" + size);
+                console.log("TEST 1 " + field[(coords.axis - 1) * 10 + coords.ordinate - 2].className);
+                console.log("TEST 2 ", coords.ordinate - 1);
+                if (field[(coords.axis - 1) * 10 + coords.ordinate - 2].className == "element" && coords.ordinate - 1 >= 0) {
+                  coords = { axis: coords.axis, ordinate: coords.ordinate - 1 };
+                  console.log("HERE");
+                  size++;
+                } else {
+                  console.log("AFOKSFKAOS");
+                  flag = true;
+                }
+              }
+              console.log(size);
+            }
             console.log(updatedObjectsShipBlock);
             setObjectsShipBlock(updatedObjectsShipBlock);
           } else if (data.result === "Already attacked") {
