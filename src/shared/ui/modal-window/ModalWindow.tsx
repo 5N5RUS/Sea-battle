@@ -32,7 +32,7 @@ const ModalWindow = ({ winnerId, scores }: modalWindowProps) => {
           <p className="header__title">battle finished</p>
         </div>
         <h1
-          className={`modal-window__title ${checkResult() ? "lose" : "win"} `}
+          className={`modal-window__title ${checkResult() === "YOU LOSE!" ? "lose" : "win"} `}
         >
           {checkResult()}
         </h1>
