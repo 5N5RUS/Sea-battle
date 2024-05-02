@@ -72,9 +72,8 @@ const SignUp = () => {
         },
         body: JSON.stringify(userData),
       });
-      if (response.ok) {
-        const data = await response.json();
-        console.log("User successfully registered:", data);
+      console.log(response.status);
+      if (response.status === 201) {
         navigate("/login");
       } else {
         console.error("Failed to register user");

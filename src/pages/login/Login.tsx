@@ -2,6 +2,9 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ClimbingBoxLoader } from "react-spinners";
 import MainCard from "src/widgets/main-card/MainCard";
+import { whoami } from "src/entities/user/userApi";
+import { AUTH_TYPE } from "src/entities/auth/model/types";
+import { useAppDispatch } from "src/shared/hooks/ReduxHooks";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -10,7 +13,7 @@ const Login = () => {
   const [usernameErrorOnSubmit, setUsernameErrorOnSubmit] = useState("");
   const [usernameInputErrorOnSubmit, setUsernameInputErrorOnSubmit] =
     useState("");
-
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -63,20 +66,26 @@ const Login = () => {
         },
         body: JSON.stringify(userData),
       });
-      if (response.ok) {
+      if (response.status != 200) {
+        console.log(response.status);
+        setLoading(false);
+      } else {
         const data = await response.json();
-        console.log("User successfully logined:", data);
-        setTimeout(() => {
+        dispatch({
+          type: AUTH_TYPE.AUTH_SUCCESS,
+          isAuthenticated: true,
+        });
+
+        localStorage.setItem("token", data.accessToken);
+        const i = whoami();
+        i.then((data) => {
           localStorage.setItem("userId", data.userId);
         });
-      } else {
-        console.error("Failed to login user");
+        setLoading(true);
+        navigate("/mainscreen");
       }
     } catch (error) {
       console.error("Error login user:", error);
-    } finally {
-      setLoading(true);
-      navigate("/mainscreen");
     }
   };
 

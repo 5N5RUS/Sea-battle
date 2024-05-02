@@ -108,6 +108,7 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
         const changedObject = objects;
         if (targetPlayer == playerId && targetCell) {
           if (changedObject[(targetCell?.axis - 1) * 10 + targetCell.ordinate - 1]) {
+            // @ts-ignore
             const oldClass = (changedObject[(targetCell?.axis - 1) * 10 + targetCell.ordinate - 1]?.valueOf().props.className);
             const splited = oldClass.split(" ");
             if (!(splited.includes("explose"))) {
