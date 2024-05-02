@@ -135,6 +135,7 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
       if (
         changedObject[(targetCell?.axis - 1) * 10 + targetCell.ordinate - 1]
       ) {
+        // for linter @ts-expect-error
         const oldClass =
           changedObject[
             (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1

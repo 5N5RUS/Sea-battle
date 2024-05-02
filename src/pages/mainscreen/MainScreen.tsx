@@ -2,16 +2,16 @@ import "./MainScreen.css";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getUserData } from "src/entities/user/userApi";
+import { whoami } from "src/entities/user/userApi";
+import { post } from "src/shared/api/fetcher";
 import MainCard from "src/widgets/main-card/MainCard";
 
 const MainScreen = () => {
-  const userId = Number(localStorage.getItem("userId"));
   const [userData, setUserData] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getUserData(userId)
+    whoami()
       .then((userData) => {
         setUserData(userData.rating);
         console.log("User ID:", userData.userId);
@@ -25,16 +25,9 @@ const MainScreen = () => {
 
   const handleStartGame = async () => {
     try {
-      const response = await fetch("http://localhost:8080/session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ userId }),
-      });
-      console.log(response);
-      if (response.ok) {
-        const data = await response.json();
+      const response = post("session", null);
+      if (response) {
+        const data = await response;
         console.log("Session created successfully:", data);
         localStorage.setItem("sessionId", data.id);
         if (data.gameState) {

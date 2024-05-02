@@ -17,11 +17,10 @@ export type shipsType = { axis: number; ordinate: number }[][];
 const PlacementShips = () => {
   const [objectsShipBlock, setObjectsShipBlock] = useState<Block[]>([]);
   const navigate = useNavigate();
-  const playerId = Number(localStorage.getItem("userId"));
   const sessionId = Number(localStorage.getItem("sessionId"));
   const [gameState, setGameState] = useState<gameStateType>();
   useEffect(() => {
-    arrangeShips(sessionId, playerId, mockedShipCoords);
+    arrangeShips(sessionId, mockedShipCoords);
     localStorage.setItem("myShips", JSON.stringify(mockedShipCoords));
     const intervalId = setInterval(() => {
       if (sessionId) {
@@ -32,7 +31,7 @@ const PlacementShips = () => {
       }
     }, 1000);
     return () => clearInterval(intervalId);
-  }, [sessionId, playerId]);
+  }, [sessionId]);
 
   useEffect(() => {
     if (gameState?.gameState === "STATUS_GAME") {
