@@ -51,6 +51,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
         if (!flag) {
           changedObject = [];
         }
+        console.log(myShipsJson);
+        console.log(myShipsJson[1]);
         myShipsJson.map((coordsList: { axis: number; ordinate: number }[]) => {
           if (coordsList[0].axis != coordsList[1].axis) {
             let counter: number = 1;
@@ -64,8 +66,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
               let number = "";
               size = checkAddClass(
                 maxValue(coordsList[0].axis, coordsList[1].axis) -
-                minValue(coordsList[0].axis, coordsList[1].axis) +
-                1,
+                  minValue(coordsList[0].axis, coordsList[1].axis) +
+                  1,
               );
               number = checkAddClass(counter);
               const clazz = "vertical-" + size + "-" + number;
@@ -92,8 +94,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
               let number = "";
               size = checkAddClass(
                 maxValue(coordsList[0].ordinate, coordsList[1].ordinate) -
-                minValue(coordsList[0].ordinate, coordsList[1].ordinate) +
-                1,
+                  minValue(coordsList[0].ordinate, coordsList[1].ordinate) +
+                  1,
               );
               number = checkAddClass(counter);
               const clazz = "horizontal-" + size + "-" + number;
@@ -139,8 +141,7 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
       }
     }
     setObjects(changedObject);
-
-  }, [myShipsString]);
+  }, [myShipsString, objects]);
   useEffect(() => {
     const changedObject = objects;
     if (targetPlayer == playerId && targetCell) {
@@ -187,17 +188,16 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
       }
     }
     setObjects(changedObject);
-  }, [targetCell]);
+  }, [targetCell, objects, playerId, targetPlayer]);
   return (
     <>
       <div className="ground-wrapper">
-        {" "}
-        <div className="grid-container">{objects.map((el) => el)}</div>{" "}
+        <div className="grid-container_wrapper">
+          <div className="grid-container">{objects.map((el) => el)}</div>
+        </div>
         <div className="ground__name_wrapper">
-          {
-            img_src ? <img src={img_src} alt="ground"></img> : null
-          }
-          <p className="ground__name">{text}</p>{" "}
+          {img_src ? <img src={img_src} alt="ground"></img> : null}
+          <p className="ground__name">{text}</p>
         </div>
       </div>
     </>

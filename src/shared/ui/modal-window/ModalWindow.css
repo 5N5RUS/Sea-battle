@@ -16,7 +16,7 @@
   justify-content: flex-start;
   width: 100%;
   max-width: 571px;
-  padding-bottom: 45px;
+  padding-bottom: 80px;
   margin-top: 340px;
   margin-right: auto;
   margin-left: auto;
@@ -65,6 +65,7 @@
 
 .header__title {
   margin-right: 30px;
+  font-family: Inter, sans-serif;
   font-size: 24px;
   font-weight: 800;
   color: #1f1f1f;
@@ -73,7 +74,7 @@
 .modal-window__title {
   margin-top: 40px;
   font-size: 48px;
-  font-weight: 800;
+  font-weight: 200;
   color: #2c2c2c;
   text-transform: uppercase;
 }
@@ -87,7 +88,7 @@
 }
 
 .modal-window__scores {
-  margin-bottom: 32px;
+  font-family: Inter, sans-serif;
   font-size: 32px;
   color: #2c2c2c;
 }

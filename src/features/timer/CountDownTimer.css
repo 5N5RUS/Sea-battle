@@ -1,9 +1,9 @@
 .timer {
   margin-right: 30px;
   margin-left: 30px;
-  font-family: "PT Sans", sans-serif;
+  font-family: pasty-sans, sans-serif;
   font-size: 64px;
-  font-weight: 800;
+  font-weight: 200;
   color: #1f1f1f;
 }
 
@@ -25,8 +25,6 @@
   width: 84px;
   height: 84px;
   background-color: white;
-
-  /* border-right: 4px #1f1f1f solid; */
   border-radius: 16px;
 }
 
