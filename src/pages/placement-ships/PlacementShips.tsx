@@ -1,28 +1,33 @@
 import "src/pages/placement-ships/PlacementShips.css";
 import "src/shared/ui/layout/Layout.css";
 
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { arrangeShips, getGameState } from "src/entities/game/gameApi";
 import ShipBlock from "src/features/ship-block/ShipBlock";
 import CountDownTimer from "src/features/timer/CountDownTimer";
+import { gameStateType } from "src/pages/battleground/Battleground";
 import Button from "src/shared/ui/button/Button";
 import Layout from "src/shared/ui/layout/Layout";
 
 import Ground, { Block } from "../../shared/ui/ground/Ground";
-import { arrangeShips, getGameState } from "src/entities/game/gameApi";
-import { useEffect, useState } from "react";
-import { gameStateType } from "src/pages/battleground/Battleground";
-import { mockedShipCoords } from "src/pages/pendingWindow/mockedShips";
+import { get } from "src/shared/api/fetcher";
 
-
-export type shipsType = { axis: number, ordinate: number }[][]
+export type shipsType = { axis: number; ordinate: number }[][];
 const PlacementShips = () => {
+  const [countShips, setCountShips] = useState<number[]>([1, 2, 3, 4]);
   const [objectsShipBlock, setObjectsShipBlock] = useState<Block[]>([]);
   const navigate = useNavigate();
   const sessionId = Number(localStorage.getItem("sessionId"));
   const [gameState, setGameState] = useState<gameStateType>();
+  const [ships, setShips] = useState();
   useEffect(() => {
-    arrangeShips(sessionId, mockedShipCoords);
-    localStorage.setItem("myShips", JSON.stringify(mockedShipCoords));
+    const ship = get(`session/${sessionId}/arrangement/random`);
+    ship.then((result) => {
+      // arrangeShips(sessionId, result);
+      setShips(result);
+      localStorage.setItem("myShips", JSON.stringify(result));
+    });
     const intervalId = setInterval(() => {
       if (sessionId) {
         const getStateProm = getGameState(sessionId);
@@ -32,14 +37,13 @@ const PlacementShips = () => {
       }
     }, 1000);
     return () => clearInterval(intervalId);
-
   }, [sessionId]);
 
   useEffect(() => {
     if (gameState?.gameState === "STATUS_GAME") {
       navigate("/battleground");
     }
-  }, [gameState]);
+  }, [gameState, navigate]);
   return (
     <Layout
       back_button={
@@ -148,9 +152,15 @@ const PlacementShips = () => {
             ship_count={4}
           />
         </li>
-        <Ground gameState={gameState} setObjectsShipBlock={setObjectsShipBlock} objectsShipBlock={objectsShipBlock}
-                text={"My ships"}
-                img_src={"src/assets/svgs/enemy-player.svg"} />
+        <Ground
+          countShips={countShips}
+          setCountShips={setCountShips}
+          gameState={gameState}
+          setObjectsShipBlock={setObjectsShipBlock}
+          objectsShipBlock={objectsShipBlock}
+          text={"My ships"}
+          img_src={"src/assets/svgs/enemy-player.svg"}
+        />
         <Button className="reset-button">Reset</Button>
       </div>
     </Layout>

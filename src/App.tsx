@@ -1,14 +1,14 @@
 import "./shared/ui/button/button.css";
 
 import { Navigate, Outlet, Route, Routes, useLocation } from "react-router";
+import PendingWindow from "src/pages/pendingWindow/PendingWindow";
+import { useAppSelector } from "src/shared/hooks/ReduxHooks";
 
 import Battleground from "./pages/battleground/Battleground";
 import Login from "./pages/login/Login";
 import MainScreen from "./pages/mainscreen/MainScreen";
 import PlacementShips from "./pages/placement-ships/PlacementShips";
 import SignUp from "./pages/signup/SignUp";
-import PendingWindow from "src/pages/pendingWindow/PendingWindow";
-import { useAppSelector } from "src/shared/hooks/ReduxHooks";
 
 const AuthRoute = () => {
   const isAuth = useAppSelector((state) => state["AUTH_REDUCER"]?.isAuth);
@@ -21,7 +21,6 @@ const AuthRoute = () => {
   }
   return <Outlet />;
 };
-
 
 function App() {
   return (

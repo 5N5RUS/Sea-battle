@@ -1,0 +1,51 @@
+.loader {
+  box-sizing: border-box;
+  display: inline-block;
+  width: 80px;
+  height: 80px;
+  border: 10px solid #1f1f1f;
+  border-bottom-color: transparent;
+  border-radius: 1000%;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.cancel-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 484px;
+  height: 90px;
+  margin-top: 56px;
+  overflow: hidden;
+  font-family: "PT Sans", sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #1f1f1f;
+  text-transform: uppercase;
+  background: #f1f1f1;
+  border: 3px #1f1f1f solid;
+  border-radius: 20px;
+  box-shadow: 4px 4px 0 #1f1f1f;
+  transition: 0.1s;
+}
+
+.cancel-button:hover {
+  background-color: #f0f0f0;
+}
+
+.cancel-button:active {
+  box-shadow:
+    4px 4px 0 black,
+    inset 2px 3px 0 #b5b5b5;
+}

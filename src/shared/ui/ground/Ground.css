@@ -61,6 +61,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 2px solid white;
     background: url("src/assets/svgs/hit.svg");
     background-repeat: no-repeat;
     background-position: center;
@@ -68,6 +69,7 @@
 
 .miss {
     display: flex;
+    border: 2px solid white;
     align-items: center;
     justify-content: center;
     background: url("src/assets/svgs/miss.svg");
@@ -139,7 +141,6 @@
 .horizontal-three-three {
     background-image: url("src/assets/images/ships/three/third.png");
 }
-
 
 .horizontal-four-one {
     background-image: url("src/assets/images/ships/four/first.png");

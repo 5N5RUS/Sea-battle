@@ -1,11 +1,12 @@
-import Button from "src/shared/ui/button/Button";
-import { useNavigate } from "react-router-dom";
 import "./ModalWindow.css";
 
+import { useNavigate } from "react-router-dom";
+import Button from "src/shared/ui/button/Button";
+
 export type modalWindowProps = {
-  winnerId: number,
-  scores: number | undefined,
-}
+  winnerId: number;
+  scores: number | undefined;
+};
 
 const ModalWindow = ({ winnerId, scores }: modalWindowProps) => {
   const playerId = Number(localStorage.getItem("userId"));
@@ -22,12 +23,28 @@ const ModalWindow = ({ winnerId, scores }: modalWindowProps) => {
   return (
     <div className="modal-window">
       <div className="modal-window-content">
-        <h1 className={"modal-window__title"}>BATTLE FINISHED</h1>
-        <p className={"modal-window__result"}>{checkResult()}</p>
+        <div className="modal-window__header">
+          <div className="header__circles">
+            <div className="circles_circle circle_first"></div>
+            <div className="circles_circle circle_second"></div>
+            <div className="circles_circle circle_third"></div>
+          </div>
+          <p className="header__title">battle finished</p>
+        </div>
+        <h1
+          className={`modal-window__title ${checkResult() === "YOU LOSE!" ? "lose" : "win"} `}
+        >
+          {checkResult()}
+        </h1>
         <p className={"modal-window__scores"}>your score: {scores}</p>
-        <Button className={"modal-window__back"} onClick={() => {
-          navigate("/mainscreen");
-        }}>BACK TO MAIN MENU</Button>
+        <Button
+          className={"card__button"}
+          onClick={() => {
+            navigate("/mainscreen");
+          }}
+        >
+          BACK TO MAIN MENU
+        </Button>
       </div>
     </div>
   );

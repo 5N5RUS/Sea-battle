@@ -11,6 +11,5 @@ export function deleteSession(sessionId: number): void {
 }
 
 export function arrangeShips(gameId: number, shipCoords: shipsType): void {
-
   post(`session/${gameId}/arrangement`, { shipCoords });
 }

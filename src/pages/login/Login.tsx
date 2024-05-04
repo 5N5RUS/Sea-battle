@@ -1,10 +1,10 @@
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ClimbingBoxLoader } from "react-spinners";
-import MainCard from "src/widgets/main-card/MainCard";
-import { whoami } from "src/entities/user/userApi";
 import { AUTH_TYPE } from "src/entities/auth/model/types";
+import { whoami } from "src/entities/user/userApi";
 import { useAppDispatch } from "src/shared/hooks/ReduxHooks";
+import MainCard from "src/widgets/main-card/MainCard";
 
 const Login = () => {
   const [username, setUsername] = useState("");

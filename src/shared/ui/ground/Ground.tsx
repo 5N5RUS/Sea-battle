@@ -1,29 +1,39 @@
 import { useEffect, useState } from "react";
-import { gameStateType } from "src/pages/battleground/Battleground";
-import ModalWindow from "src/shared/ui/modal-window/ModalWindow";
 import { whoami } from "src/entities/user/userApi";
+import { gameStateType } from "src/pages/battleground/Battleground";
 import { post } from "src/shared/api/fetcher";
+import ModalWindow from "src/shared/ui/modal-window/ModalWindow";
 
 type GroundProps = {
   text?: string;
   img_src?: string;
   gameState: gameStateType | undefined;
-  objectsShipBlock: Block[]
-  setObjectsShipBlock: React.Dispatch<React.SetStateAction<Block[]>>
+  objectsShipBlock: Block[];
+  setObjectsShipBlock: React.Dispatch<React.SetStateAction<Block[]>>;
+  setCountShips: React.Dispatch<React.SetStateAction<number[]>>;
+  countShips: number[];
 };
 
 export type userDataType = {
-  id: number,
-  login: string,
-  rating: number
-}
+  id: number;
+  login: string;
+  rating: number;
+};
 
 export interface Block {
   key: string;
   className: string;
 }
 
-const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBlock }: GroundProps) => {
+const Ground = ({
+                  text,
+                  img_src,
+                  gameState,
+                  objectsShipBlock,
+                  setObjectsShipBlock,
+                  countShips,
+                  setCountShips,
+                }: GroundProps) => {
   const [userData, setUserData] = useState<userDataType>();
   const [sessionId, setSessionId] = useState<number>();
   const userId = Number(localStorage.getItem("userId"));
@@ -32,25 +42,144 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
     if (myTurn) {
       try {
         const { axis, ordinate } = JSON.parse(key);
+        if (objectsShipBlock[(axis - 1) * 10 + ordinate - 1].className == "miss") {
+          return;
+        }
         const resul = post(`session/${sessionId}/turn`, { axis, ordinate });
         resul.then((data) => {
-          console.log(data);
           if (data.result === "catch" || data.result === "killed") {
-            if (data.result == "catch") {
-              const field = objectsShipBlock;
-              let a = { axis: axis, ordinate: ordinate };
-              let size = 0;
-              // while (a.ordinate != 100) {
-              //   if (field[(a.axis - 1) * 10 + a.ordinate].className == "element") {
-              //     console.log("TES");
-              //     a.ordinate = 100;
-              //   }
-              // }
-            }
             const updatedObjectsShipBlock = objectsShipBlock.map((block) =>
               block.key === key ? { ...block, className: "element" } : block,
             );
-            console.log(updatedObjectsShipBlock);
+            if (data.result == "killed") {
+              const field = updatedObjectsShipBlock;
+              const startCoords = { axis: axis, ordinate: ordinate };
+              let coords = startCoords;
+              let size = 1;
+              let flag = false;
+              const shipCells = [];
+              shipCells.push({ axis: coords.axis, ordinate: coords.ordinate });
+              while (!flag) {
+                if (coords.ordinate - 1 > 0) {
+                  if (field[(coords.axis - 1) * 10 + coords.ordinate - 2].className == "element") {
+                    coords = { axis: coords.axis, ordinate: coords.ordinate - 1 };
+                    shipCells.push({ axis: coords.axis, ordinate: coords.ordinate });
+                    size++;
+                  } else {
+                    flag = true;
+                  }
+                } else {
+                  flag = true;
+                }
+              }
+              flag = false;
+              coords = startCoords;
+              while (!flag) {
+                if (coords.ordinate + 1 <= 10) {
+                  if (field[(coords.axis - 1) * 10 + coords.ordinate].className == "element") {
+                    coords = { axis: coords.axis, ordinate: coords.ordinate + 1 };
+                    shipCells.push({ axis: coords.axis, ordinate: coords.ordinate });
+                    size++;
+                  } else {
+                    flag = true;
+                  }
+                } else {
+                  flag = true;
+                }
+              }
+              flag = false;
+              coords = startCoords;
+              while (!flag) {
+                if (coords.axis + 1 <= 10) {
+                  if (field[(coords.axis) * 10 + coords.ordinate - 1].className == "element") {
+                    coords = { axis: coords.axis + 1, ordinate: coords.ordinate };
+                    shipCells.push({ axis: coords.axis, ordinate: coords.ordinate });
+                    size++;
+                  } else {
+                    flag = true;
+                  }
+                } else {
+                  flag = true;
+                }
+              }
+
+              flag = false;
+              coords = startCoords;
+              while (!flag) {
+                if (coords.axis - 1 > 0) {
+                  if (field[(coords.axis - 2) * 10 + coords.ordinate - 1].className == "element") {
+                    coords = { axis: coords.axis - 1, ordinate: coords.ordinate };
+                    shipCells.push({ axis: coords.axis, ordinate: coords.ordinate });
+                    size++;
+                  } else {
+                    flag = true;
+                  }
+                } else {
+                  flag = true;
+                }
+              }
+              const newCount = countShips;
+              switch (size) {
+                case 1:
+                  newCount[3] = newCount[3] - 1;
+                  setCountShips(newCount);
+                  break;
+                case 2:
+                  newCount[2] = newCount[2] - 1;
+                  setCountShips(newCount);
+                  break;
+                case 3:
+                  newCount[1] = newCount[1] - 1;
+                  setCountShips(newCount);
+                  break;
+                case 4:
+                  newCount[0] = newCount[0] - 1;
+                  setCountShips(newCount);
+                  break;
+              }
+              shipCells.map((el) => {
+                if (el.ordinate < 10) {
+                  if (field[(el.axis - 1) * 10 + el.ordinate].className == "grid-item") {
+                    updatedObjectsShipBlock[(el.axis - 1) * 10 + el.ordinate].className = "miss";
+                  }
+                }
+                if (el.ordinate > 1) {
+                  if (field[(el.axis - 1) * 10 + el.ordinate - 2].className == "grid-item") {
+                    updatedObjectsShipBlock[(el.axis - 1) * 10 + el.ordinate - 2].className = "miss";
+                  }
+                }
+                if (el.axis > 1) {
+                  if (field[(el.axis - 2) * 10 + el.ordinate - 1].className == "grid-item") {
+                    updatedObjectsShipBlock[(el.axis - 2) * 10 + el.ordinate - 1].className = "miss";
+                  }
+                }
+                if (el.axis < 10) {
+                  if (field[(el.axis) * 10 + el.ordinate - 1].className == "grid-item") {
+                    updatedObjectsShipBlock[(el.axis) * 10 + el.ordinate - 1].className = "miss";
+                  }
+                }
+                if (el.axis < 10 && el.ordinate < 10) {
+                  if (field[(el.axis) * 10 + el.ordinate].className == "grid-item") {
+                    updatedObjectsShipBlock[(el.axis) * 10 + el.ordinate].className = "miss";
+                  }
+                }
+                if (el.axis < 10 && el.ordinate > 1) {
+                  if (field[(el.axis) * 10 + el.ordinate - 2].className == "grid-item") {
+                    updatedObjectsShipBlock[(el.axis) * 10 + el.ordinate - 2].className = "miss";
+                  }
+                }
+                if (el.axis > 1 && el.ordinate < 10) {
+                  if (field[(el.axis - 2) * 10 + el.ordinate].className == "grid-item") {
+                    updatedObjectsShipBlock[(el.axis - 2) * 10 + el.ordinate].className = "miss";
+                  }
+                }
+                if (el.axis > 1 && el.ordinate > 1) {
+                  if (field[(el.axis - 2) * 10 + el.ordinate - 2].className == "grid-item") {
+                    updatedObjectsShipBlock[(el.axis - 2) * 10 + el.ordinate - 2].className = "miss";
+                  }
+                }
+              });
+            }
             setObjectsShipBlock(updatedObjectsShipBlock);
           } else if (data.result === "Already attacked") {
             console.log("Already attacked");
@@ -77,12 +206,11 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
       }
     }
     setObjectsShipBlock(blocks);
-  }, []);
+  }, [setObjectsShipBlock]);
   useEffect(() => {
-    whoami()
-      .then((res: userDataType) => {
-        setUserData(res);
-      });
+    whoami().then((res: userDataType) => {
+      setUserData(res);
+    });
     if (gameState?.turnPlayerId == userId) {
       setMyTurn(true);
     } else {
@@ -99,8 +227,9 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
   }
   return (
     <>
-      {gameState?.gameState === "STATUS_FINISH" ?
-        <ModalWindow winnerId={gameState.winnerId} scores={userData?.rating} /> : null}
+      {gameState?.gameState === "STATUS_FINISH" ? (
+        <ModalWindow winnerId={gameState.winnerId} scores={userData?.rating} />
+      ) : null}
       <div className="ground-wrapper">
         <div className="grid-container">
           {objectsShipBlock.map((block) => (
@@ -125,7 +254,6 @@ const Ground = ({ text, img_src, gameState, objectsShipBlock, setObjectsShipBloc
       </div>
     </>
   );
-
 };
 
 export default Ground;
