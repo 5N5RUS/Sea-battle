@@ -12,6 +12,7 @@ import Layout from "src/shared/ui/layout/Layout";
 
 import Ground, { Block } from "../../shared/ui/ground/Ground";
 import { get } from "src/shared/api/fetcher";
+import MyGround from "src/shared/ui/ground/MyGround";
 
 export type shipsType = { axis: number; ordinate: number }[][];
 const PlacementShips = () => {
@@ -20,14 +21,9 @@ const PlacementShips = () => {
   const navigate = useNavigate();
   const sessionId = Number(localStorage.getItem("sessionId"));
   const [gameState, setGameState] = useState<gameStateType>();
-  const [ships, setShips] = useState();
+  const myShipsString = localStorage.getItem("myShips");
   useEffect(() => {
-    const ship = get(`session/${sessionId}/arrangement/random`);
-    ship.then((result) => {
-      // arrangeShips(sessionId, result);
-      setShips(result);
-      localStorage.setItem("myShips", JSON.stringify(result));
-    });
+
     const intervalId = setInterval(() => {
       if (sessionId) {
         const getStateProm = getGameState(sessionId);
@@ -38,6 +34,18 @@ const PlacementShips = () => {
     }, 1000);
     return () => clearInterval(intervalId);
   }, [sessionId]);
+
+  function randomShips() {
+    if (myShipsString != null) {
+      localStorage.setItem("myShips", null);
+    }
+    const ship = get(`session/${sessionId}/arrangement/random`);
+    ship.then((result) => {
+      // arrangeShips(sessionId, result);
+      localStorage.setItem("myShips", JSON.stringify(result));
+    });
+
+  }
 
   useEffect(() => {
     if (gameState?.gameState === "STATUS_GAME") {
@@ -106,7 +114,9 @@ const PlacementShips = () => {
       }
       footer={
         <>
-          <Button className="randomise-button">
+          <Button className="randomise-button" onClick={() => {
+            randomShips();
+          }}>
             RANDOMISE
             <svg
               width="46"
@@ -152,14 +162,12 @@ const PlacementShips = () => {
             ship_count={4}
           />
         </li>
-        <Ground
-          countShips={countShips}
-          setCountShips={setCountShips}
-          gameState={gameState}
-          setObjectsShipBlock={setObjectsShipBlock}
-          objectsShipBlock={objectsShipBlock}
-          text={"My ships"}
-          img_src={"src/assets/svgs/enemy-player.svg"}
+        <MyGround
+          targetPlayer={undefined}
+          text={""}
+          targetCell={undefined}
+          isMyTurn={false}
+          img_src={undefined}
         />
         <Button className="reset-button">Reset</Button>
       </div>

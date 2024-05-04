@@ -1,4 +1,5 @@
 import "./ShipBlock.css";
+import "../../shared/ui/ground/Ground.css";
 
 type ShipBlockProps = {
   ship_count: number;
@@ -13,11 +14,10 @@ const ShipBlock = ({ ship_count, className, text }: ShipBlockProps) => {
   for (let i = 0; i < n; i++) {
     ships.push(<div className={`${className}`}></div>);
   }
-
   return (
     <>
       <div>
-        <p>{text}</p>
+        <p className={"arrangement-text"}>{text}</p>
         <div className="ships-wrapper">{ships}</div>
       </div>
     </>
