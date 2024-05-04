@@ -82,14 +82,16 @@ const Battleground = () => {
       timer={<CountDownTimer minutes={1} seconds={0} />}
       text={
         <p className="player-turn">
-          {gameState?.turnPlayerId == userId ? "Your turn" : "Enemy's turn"}
+          {gameState?.turnPlayerId == userId ? "your turn" : "enemy's turn"}
         </p>
       }
       help_button={
         <Button
           className="rules-button"
           onClick={() => {
-            alert("I need help you");
+            alert(
+              "The point of the game is a battle of the opponents on two square grids sized 10x10 squares each.\n\nThe aim of the game is to sink all the ships placed in the opponent’s field.\n\nThe rules of ship arrangement\n\nEach player is provided a set of 10 ships.\n\nThe ships can be placed vertically and horizontally, and a distance of at least one square is kept between them.",
+            );
           }}
           disabled={false}
         >
@@ -98,24 +100,80 @@ const Battleground = () => {
       }
     >
       <div className="main__battlegrounds">
-        <MyGround
-          myShips={myShips}
-          img_src="src/assets/svgs/my-player.svg"
-          text="Your ships"
-          isMyTurn={isMyTurn}
-          targetCell={targetCell}
-          targetPlayer={targetPlayer}
-        />
+        <div>
+          <div className="battlegrounds__arraycells_numbers-my">
+            <div className="battlegrounds__nameofcell-my">1</div>
+            <div className="battlegrounds__nameofcell-my"> 2</div>
+            <div className="battlegrounds__nameofcell-my"> 3</div>
+            <div className="battlegrounds__nameofcell-my"> 4</div>
+            <div className="battlegrounds__nameofcell-my"> 5</div>
+            <div className="battlegrounds__nameofcell-my"> 6</div>
+            <div className="battlegrounds__nameofcell-my"> 7</div>
+            <div className="battlegrounds__nameofcell-my"> 8</div>
+            <div className="battlegrounds__nameofcell-my"> 9</div>
+            <div className="battlegrounds__nameofcell-my"> 10</div>
+          </div>
+          <div className="battlegrounds__arraycells_wrapper-column">
+            <div className="battlegrounds__array_cells-words">
+              <div className="battlegrounds__nameofcell-my">A</div>
+              <div className="battlegrounds__nameofcell-my">B</div>
+              <div className="battlegrounds__nameofcell-my"> C</div>
+              <div className="battlegrounds__nameofcell-my"> D</div>
+              <div className="battlegrounds__nameofcell-my"> E</div>
+              <div className="battlegrounds__nameofcell-my"> F</div>
+              <div className="battlegrounds__nameofcell-my"> G</div>
+              <div className="battlegrounds__nameofcell-my"> H</div>
+              <div className="battlegrounds__nameofcell-my"> I</div>
+              <div className="battlegrounds__nameofcell-my"> J</div>
+            </div>
+            <MyGround
+              myShips={myShips}
+              img_src="src/assets/svgs/my-player.svg"
+              text="Your ships"
+              isMyTurn={isMyTurn}
+              targetCell={targetCell}
+              targetPlayer={targetPlayer}
+            />
+          </div>
+        </div>
+        <div>
+          <div className="battlegrounds__array_cells-numbers">
+            <div className="battlegrounds__nameofcell-enemy">1</div>
+            <div className="battlegrounds__nameofcell-enemy"> 2</div>
+            <div className="battlegrounds__nameofcell-enemy"> 3</div>
+            <div className="battlegrounds__nameofcell-enemy"> 4</div>
+            <div className="battlegrounds__nameofcell-enemy"> 5</div>
+            <div className="battlegrounds__nameofcell-enemy"> 6</div>
+            <div className="battlegrounds__nameofcell-enemy"> 7</div>
+            <div className="battlegrounds__nameofcell-enemy"> 8</div>
+            <div className="battlegrounds__nameofcell-enemy"> 9</div>
+            <div className="battlegrounds__nameofcell-enemy"> 10</div>
+          </div>
 
-        <Ground
-          countShips={countShips}
-          setCountShips={setCountShips}
-          gameState={gameState}
-          img_src="src/assets/svgs/enemy-player.svg"
-          text="Enemy’s ships"
-          objectsShipBlock={objectsShipBlock}
-          setObjectsShipBlock={setObjectsShipBlock}
-        />
+          <div className="battlegrounds__arraycells_wrapper-column">
+            <Ground
+              countShips={countShips}
+              setCountShips={setCountShips}
+              gameState={gameState}
+              img_src="src/assets/svgs/enemy-player.svg"
+              text="enemy’s ships"
+              objectsShipBlock={objectsShipBlock}
+              setObjectsShipBlock={setObjectsShipBlock}
+            />
+            <div className="battlegrounds__arraycells_words-enemy">
+              <div className="battlegrounds__nameofcell-enemy">A</div>
+              <div className="battlegrounds__nameofcell-enemy">B</div>
+              <div className="battlegrounds__nameofcell-enemy"> C</div>
+              <div className="battlegrounds__nameofcell-enemy"> D</div>
+              <div className="battlegrounds__nameofcell-enemy"> E</div>
+              <div className="battlegrounds__nameofcell-enemy"> F</div>
+              <div className="battlegrounds__nameofcell-enemy"> G</div>
+              <div className="battlegrounds__nameofcell-enemy"> H</div>
+              <div className="battlegrounds__nameofcell-enemy"> I</div>
+              <div className="battlegrounds__nameofcell-enemy"> J</div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div

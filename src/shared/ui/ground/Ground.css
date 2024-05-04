@@ -1,3 +1,11 @@
+.grid-container_wrapper {
+  padding: 6px;
+  background-color: white;
+  border: 4px solid #1f1f1f;
+  border-radius: 10px;
+  box-shadow: 0 4px 0 #1f1f1f;
+}
+
 .grid-container {
   display: grid;
   grid-template-rows: repeat(10, 48px);
@@ -5,8 +13,6 @@
   width: 480px;
   height: 480px;
   background: url("src/assets/images/Sea-ground.png");
-  border: 4px #2c2c2c solid;
-  box-shadow: 0 4px 0 #1f1f1f;
 }
 
 .grid-item {
@@ -44,16 +50,17 @@
 }
 
 .ground__name {
-  margin-top: 10px;
   margin-left: 20px;
+  font-family: Inter, sans-serif;
   font-size: 35px;
   font-weight: 700;
   color: #2c2c2c;
-  text-transform: uppercase;
 }
 
 .ground__name_wrapper {
   display: flex;
+  align-items: center;
+  justify-content: center;
   margin-top: 20px;
 }
 
@@ -103,8 +110,8 @@
 }
 
 .vertical-four-one {
-    background-image: url("src/assets/images/ships/four/first.png");
-    transform: rotate(90deg);
+  background-image: url("src/assets/images/ships/four/first.png");
+  transform: rotate(90deg);
 }
 
 .vertical-four-two {

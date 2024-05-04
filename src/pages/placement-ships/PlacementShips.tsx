@@ -7,7 +7,6 @@ import { arrangeShips, getGameState } from "src/entities/game/gameApi";
 import ShipBlock from "src/features/ship-block/ShipBlock";
 import CountDownTimer from "src/features/timer/CountDownTimer";
 import { gameStateType } from "src/pages/battleground/Battleground";
-
 import { get } from "src/shared/api/fetcher";
 import Button from "src/shared/ui/button/Button";
 import MyGround from "src/shared/ui/ground/MyGround";
@@ -69,7 +68,8 @@ const PlacementShips = () => {
       }
       timer={<CountDownTimer minutes={3} seconds={0} />}
       text={<p
-        className="player-turn">{!block ? "Drag & drop, click to rotate" : "waiting for the enemy's readiness"}</p>}
+        className="player-turn">{!block ? "drag & drop, click to rotate" : "waiting for the enemy's readiness"}
+        </p>}
       help_button={
         <button
           className={"rules-button"}
@@ -172,15 +172,44 @@ const PlacementShips = () => {
             ship_count={4}
           />
         </li>
-        <MyGround
-          targetPlayer={undefined}
-          text={""}
-          targetCell={undefined}
-          isMyTurn={false}
-          img_src={undefined}
-          myShips={myShips}
-        />
-        <div className={"right-menu"}>
+        <div>
+          <div className="battlegrounds__array_cells-numbers">
+            <div className="battlegrounds__nameofcell-my">1</div>
+            <div className="battlegrounds__nameofcell-my"> 2</div>
+            <div className="battlegrounds__nameofcell-my"> 3</div>
+            <div className="battlegrounds__nameofcell-my"> 4</div>
+            <div className="battlegrounds__nameofcell-my"> 5</div>
+            <div className="battlegrounds__nameofcell-my"> 6</div>
+            <div className="battlegrounds__nameofcell-my"> 7</div>
+            <div className="battlegrounds__nameofcell-my"> 8</div>
+            <div className="battlegrounds__nameofcell-my"> 9</div>
+            <div className="battlegrounds__nameofcell-my"> 10</div>
+          </div>
+          <div className="battlegrounds__arraycells_wrapper-column">
+           <MyGround
+              targetPlayer={undefined}
+              text={""}
+              targetCell={undefined}
+              isMyTurn={false}
+              img_src={undefined}
+              myShips={myShips}
+            />
+            <div className="battlegrounds__arraycells_words-enemy">
+              <div className="battlegrounds__nameofcell-my">A</div>
+              <div className="battlegrounds__nameofcell-my">B</div>
+              <div className="battlegrounds__nameofcell-my"> C</div>
+              <div className="battlegrounds__nameofcell-my"> D</div>
+              <div className="battlegrounds__nameofcell-my"> E</div>
+              <div className="battlegrounds__nameofcell-my"> F</div>
+              <div className="battlegrounds__nameofcell-my"> G</div>
+              <div className="battlegrounds__nameofcell-my"> H</div>
+              <div className="battlegrounds__nameofcell-my"> I</div>
+              <div className="battlegrounds__nameofcell-my"> J</div>
+            </div>
+          </div>
+        </div>
+
+       <div className={"right-menu"}>
           <div className={"right-buttons"}>
             <Button className="reset-button" disabled={block} onClick={() => {
               localStorage.removeItem("myShips");

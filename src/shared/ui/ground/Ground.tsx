@@ -308,21 +308,23 @@ const Ground = ({
         <ModalWindow winnerId={gameState.winnerId} scores={userData?.rating} />
       ) : null}
       <div className="ground-wrapper">
-        <div className="grid-container">
-          {objectsShipBlock.map((block) => (
-            <div
-              key={block.key}
-              className={block.className}
-              onClick={() => handleBlockClick(block.key)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleBlockClick(block.key);
-                }
-              }}
-              role="button"
-              tabIndex={0}
-            ></div>
-          ))}
+        <div className="grid-container_wrapper">
+          <div className="grid-container">
+            {objectsShipBlock.map((block) => (
+              <div
+                key={block.key}
+                className={block.className}
+                onClick={() => handleBlockClick(block.key)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleBlockClick(block.key);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              ></div>
+            ))}
+          </div>
         </div>
         <div className="ground__name_wrapper">
           <img src={img_src} alt="ground-img" />

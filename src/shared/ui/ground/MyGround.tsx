@@ -113,7 +113,6 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundPr
             } else {
               const index =
                 (coordsList[0].axis - 1) * 10 + coordsList[0].ordinate - 1;
-
               changedObject[index] = (
                 <div
                   key={JSON.stringify({
@@ -155,7 +154,6 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundPr
     }
 
     setObjects(changedObject);
-
   }, [myShipsString, myShips]);
   useEffect(() => {
     const changedObject = objects;
@@ -203,18 +201,16 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundPr
       }
     }
     setObjects(changedObject);
-  }, [targetCell]);
+  }, [targetCell, objects, playerId, targetPlayer]);
   return (
     <>
       <div className="ground-wrapper">
-        {" "}
-        <div className="grid-container">{objects.map((el) => el)}</div>
-        {" "}
+        <div className="grid-container_wrapper">
+          <div className="grid-container">{objects.map((el) => el)}</div>
+        </div>
         <div className="ground__name_wrapper">
-          {
-            img_src ? <img src={img_src} alt="ground"></img> : null
-          }
-          <p className="ground__name">{text}</p>{" "}
+          {img_src ? <img src={img_src} alt="ground"></img> : null}
+          <p className="ground__name">{text}</p>
         </div>
       </div>
     </>
