@@ -1,15 +1,15 @@
 * {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
 }
 
 :root {
-    font-family: "PT Sans", sans-serif;
-    background-color: #cbe9f2;
+  font-family: pasty-sans, sans-serif;
+  background-color: #cbe9f2;
 }
 
 @font-face {
-    font-family: pasty-sans;
-    font-weight: normal;
-    src: local("pasty-sans"), url("src/assets/fonts/pasty-sans.otf");
+  font-family: pasty-sans;
+  font-weight: normal;
+  src: local("pasty-sans"), url("src/assets/fonts/pasty-sans.otf");
 }

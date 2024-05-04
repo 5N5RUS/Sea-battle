@@ -58,10 +58,10 @@
 }
 
 .card_title {
-  margin-top: 26px;
+  margin-top: 46px;
   margin-bottom: 36px;
   font-size: 64px;
-  font-weight: 800;
+  font-weight: 200;
   color: #2c2c2c;
   text-transform: uppercase;
 }
@@ -91,7 +91,18 @@ input {
 }
 
 .input_login-error {
-  margin-top: 5px;
+  position: absolute;
+  margin-top: 15px;
+  font-family: Inter, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #3a849b;
+  transition: 0.1s;
+}
+
+.input_data-error {
+  position: absolute;
+  margin-top: 15px;
   font-family: Inter, sans-serif;
   font-size: 14px;
   font-weight: 400;
@@ -126,10 +137,11 @@ input:hover:not(.error) {
   justify-content: center;
   width: 484px;
   height: 83px;
+  margin-top: 32px;
   overflow: hidden;
-  font-family: "PT Sans", sans-serif;
+  font-family: pasty-sans, sans-serif;
   font-size: 32px;
-  font-weight: 700;
+  font-weight: 200;
   color: #1f1f1f;
   text-transform: uppercase;
   background: #6bc9e6;
@@ -147,6 +159,22 @@ input:hover:not(.error) {
   box-shadow:
     4px 4px 0 #1f1f1f,
     inset 4px 4px 0 #307c96;
+}
+
+.card__navigate {
+  margin-top: 24px;
+  font-family: Inter, sans-serif;
+  font-size: 24px;
+  color: #000;
+  text-align: center;
+}
+
+.navigate_href {
+  display: inline-block;
+  padding-bottom: 0.5px;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 1px solid #000;
 }
 
 .mainreg_logo {

@@ -26,14 +26,14 @@ export interface Block {
 }
 
 const Ground = ({
-                  text,
-                  img_src,
-                  gameState,
-                  objectsShipBlock,
-                  setObjectsShipBlock,
-                  countShips,
-                  setCountShips,
-                }: GroundProps) => {
+  text,
+  img_src,
+  gameState,
+  objectsShipBlock,
+  setObjectsShipBlock,
+  countShips,
+  setCountShips,
+}: GroundProps) => {
   const [userData, setUserData] = useState<userDataType>();
   const [sessionId, setSessionId] = useState<number>();
   const userId = Number(localStorage.getItem("userId"));
@@ -42,7 +42,9 @@ const Ground = ({
     if (myTurn) {
       try {
         const { axis, ordinate } = JSON.parse(key);
-        if (objectsShipBlock[(axis - 1) * 10 + ordinate - 1].className == "miss") {
+        if (
+          objectsShipBlock[(axis - 1) * 10 + ordinate - 1].className == "miss"
+        ) {
           return;
         }
         const resul = post(`session/${sessionId}/turn`, { axis, ordinate });
@@ -61,9 +63,18 @@ const Ground = ({
               shipCells.push({ axis: coords.axis, ordinate: coords.ordinate });
               while (!flag) {
                 if (coords.ordinate - 1 > 0) {
-                  if (field[(coords.axis - 1) * 10 + coords.ordinate - 2].className == "element") {
-                    coords = { axis: coords.axis, ordinate: coords.ordinate - 1 };
-                    shipCells.push({ axis: coords.axis, ordinate: coords.ordinate });
+                  if (
+                    field[(coords.axis - 1) * 10 + coords.ordinate - 2]
+                      .className == "element"
+                  ) {
+                    coords = {
+                      axis: coords.axis,
+                      ordinate: coords.ordinate - 1,
+                    };
+                    shipCells.push({
+                      axis: coords.axis,
+                      ordinate: coords.ordinate,
+                    });
                     size++;
                   } else {
                     flag = true;
@@ -76,9 +87,18 @@ const Ground = ({
               coords = startCoords;
               while (!flag) {
                 if (coords.ordinate + 1 <= 10) {
-                  if (field[(coords.axis - 1) * 10 + coords.ordinate].className == "element") {
-                    coords = { axis: coords.axis, ordinate: coords.ordinate + 1 };
-                    shipCells.push({ axis: coords.axis, ordinate: coords.ordinate });
+                  if (
+                    field[(coords.axis - 1) * 10 + coords.ordinate].className ==
+                    "element"
+                  ) {
+                    coords = {
+                      axis: coords.axis,
+                      ordinate: coords.ordinate + 1,
+                    };
+                    shipCells.push({
+                      axis: coords.axis,
+                      ordinate: coords.ordinate,
+                    });
                     size++;
                   } else {
                     flag = true;
@@ -91,9 +111,18 @@ const Ground = ({
               coords = startCoords;
               while (!flag) {
                 if (coords.axis + 1 <= 10) {
-                  if (field[(coords.axis) * 10 + coords.ordinate - 1].className == "element") {
-                    coords = { axis: coords.axis + 1, ordinate: coords.ordinate };
-                    shipCells.push({ axis: coords.axis, ordinate: coords.ordinate });
+                  if (
+                    field[coords.axis * 10 + coords.ordinate - 1].className ==
+                    "element"
+                  ) {
+                    coords = {
+                      axis: coords.axis + 1,
+                      ordinate: coords.ordinate,
+                    };
+                    shipCells.push({
+                      axis: coords.axis,
+                      ordinate: coords.ordinate,
+                    });
                     size++;
                   } else {
                     flag = true;
@@ -107,9 +136,18 @@ const Ground = ({
               coords = startCoords;
               while (!flag) {
                 if (coords.axis - 1 > 0) {
-                  if (field[(coords.axis - 2) * 10 + coords.ordinate - 1].className == "element") {
-                    coords = { axis: coords.axis - 1, ordinate: coords.ordinate };
-                    shipCells.push({ axis: coords.axis, ordinate: coords.ordinate });
+                  if (
+                    field[(coords.axis - 2) * 10 + coords.ordinate - 1]
+                      .className == "element"
+                  ) {
+                    coords = {
+                      axis: coords.axis - 1,
+                      ordinate: coords.ordinate,
+                    };
+                    shipCells.push({
+                      axis: coords.axis,
+                      ordinate: coords.ordinate,
+                    });
                     size++;
                   } else {
                     flag = true;
@@ -139,43 +177,82 @@ const Ground = ({
               }
               shipCells.map((el) => {
                 if (el.ordinate < 10) {
-                  if (field[(el.axis - 1) * 10 + el.ordinate].className == "grid-item") {
-                    updatedObjectsShipBlock[(el.axis - 1) * 10 + el.ordinate].className = "miss";
+                  if (
+                    field[(el.axis - 1) * 10 + el.ordinate].className ==
+                    "grid-item"
+                  ) {
+                    updatedObjectsShipBlock[
+                      (el.axis - 1) * 10 + el.ordinate
+                    ].className = "miss";
                   }
                 }
                 if (el.ordinate > 1) {
-                  if (field[(el.axis - 1) * 10 + el.ordinate - 2].className == "grid-item") {
-                    updatedObjectsShipBlock[(el.axis - 1) * 10 + el.ordinate - 2].className = "miss";
+                  if (
+                    field[(el.axis - 1) * 10 + el.ordinate - 2].className ==
+                    "grid-item"
+                  ) {
+                    updatedObjectsShipBlock[
+                      (el.axis - 1) * 10 + el.ordinate - 2
+                    ].className = "miss";
                   }
                 }
                 if (el.axis > 1) {
-                  if (field[(el.axis - 2) * 10 + el.ordinate - 1].className == "grid-item") {
-                    updatedObjectsShipBlock[(el.axis - 2) * 10 + el.ordinate - 1].className = "miss";
+                  if (
+                    field[(el.axis - 2) * 10 + el.ordinate - 1].className ==
+                    "grid-item"
+                  ) {
+                    updatedObjectsShipBlock[
+                      (el.axis - 2) * 10 + el.ordinate - 1
+                    ].className = "miss";
                   }
                 }
                 if (el.axis < 10) {
-                  if (field[(el.axis) * 10 + el.ordinate - 1].className == "grid-item") {
-                    updatedObjectsShipBlock[(el.axis) * 10 + el.ordinate - 1].className = "miss";
+                  if (
+                    field[el.axis * 10 + el.ordinate - 1].className ==
+                    "grid-item"
+                  ) {
+                    updatedObjectsShipBlock[
+                      el.axis * 10 + el.ordinate - 1
+                    ].className = "miss";
                   }
                 }
                 if (el.axis < 10 && el.ordinate < 10) {
-                  if (field[(el.axis) * 10 + el.ordinate].className == "grid-item") {
-                    updatedObjectsShipBlock[(el.axis) * 10 + el.ordinate].className = "miss";
+                  if (
+                    field[el.axis * 10 + el.ordinate].className == "grid-item"
+                  ) {
+                    updatedObjectsShipBlock[
+                      el.axis * 10 + el.ordinate
+                    ].className = "miss";
                   }
                 }
                 if (el.axis < 10 && el.ordinate > 1) {
-                  if (field[(el.axis) * 10 + el.ordinate - 2].className == "grid-item") {
-                    updatedObjectsShipBlock[(el.axis) * 10 + el.ordinate - 2].className = "miss";
+                  if (
+                    field[el.axis * 10 + el.ordinate - 2].className ==
+                    "grid-item"
+                  ) {
+                    updatedObjectsShipBlock[
+                      el.axis * 10 + el.ordinate - 2
+                    ].className = "miss";
                   }
                 }
                 if (el.axis > 1 && el.ordinate < 10) {
-                  if (field[(el.axis - 2) * 10 + el.ordinate].className == "grid-item") {
-                    updatedObjectsShipBlock[(el.axis - 2) * 10 + el.ordinate].className = "miss";
+                  if (
+                    field[(el.axis - 2) * 10 + el.ordinate].className ==
+                    "grid-item"
+                  ) {
+                    updatedObjectsShipBlock[
+                      (el.axis - 2) * 10 + el.ordinate
+                    ].className = "miss";
                   }
                 }
                 if (el.axis > 1 && el.ordinate > 1) {
-                  if (field[(el.axis - 2) * 10 + el.ordinate - 2].className == "grid-item") {
-                    updatedObjectsShipBlock[(el.axis - 2) * 10 + el.ordinate - 2].className = "miss";
+                  if (
+                    field[(el.axis - 2) * 10 + el.ordinate - 2].className ==
+                    "grid-item"
+                  ) {
+                    updatedObjectsShipBlock[
+                      (el.axis - 2) * 10 + el.ordinate - 2
+                    ].className = "miss";
                   }
                 }
               });

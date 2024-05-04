@@ -150,14 +150,14 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
         // for linter @ts-expect-error
         const oldClass =
           changedObject[
-          (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
-            ]?.valueOf().props.className;
+            (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
+          ]?.valueOf().props.className;
         const splited = oldClass.split(" ");
         if (!splited.includes("explose")) {
           if (splited[1] == undefined) {
             changedObject[
-            (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
-              ] = (
+              (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
+            ] = (
               <div
                 className={`${oldClass} miss`}
                 key={JSON.stringify({
@@ -169,8 +169,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
           } else {
             if (!splited.includes("miss")) {
               changedObject[
-              (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
-                ] = (
+                (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
+              ] = (
                 <div
                   className={`${oldClass}`}
                   key={JSON.stringify({
@@ -192,8 +192,7 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
     <>
       <div className="ground-wrapper">
         {" "}
-        <div className="grid-container">{objects.map((el) => el)}</div>
-        {" "}
+        <div className="grid-container">{objects.map((el) => el)}</div>{" "}
         <div className="ground__name_wrapper">
           {
             img_src ? <img src={img_src} alt="ground"></img> : null
