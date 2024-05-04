@@ -28,12 +28,12 @@
   height: 90px;
   margin-top: 56px;
   overflow: hidden;
-  font-family: "PT Sans", sans-serif;
+  font-family: pasty-sans, sans-serif;
   font-size: 32px;
   font-weight: 700;
   color: #1f1f1f;
   text-transform: uppercase;
-  background: #f1f1f1;
+  background: #fff;
   border: 3px #1f1f1f solid;
   border-radius: 20px;
   box-shadow: 4px 4px 0 #1f1f1f;

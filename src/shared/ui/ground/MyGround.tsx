@@ -53,8 +53,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
             let number = "";
             size = checkAddClass(
               maxValue(coordsList[0].axis, coordsList[1].axis) -
-              minValue(coordsList[0].axis, coordsList[1].axis) +
-              1,
+                minValue(coordsList[0].axis, coordsList[1].axis) +
+                1,
             );
             number = checkAddClass(counter);
             const clazz = "vertical-" + size + "-" + number;
@@ -81,8 +81,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
             let number = "";
             size = checkAddClass(
               maxValue(coordsList[0].ordinate, coordsList[1].ordinate) -
-              minValue(coordsList[0].ordinate, coordsList[1].ordinate) +
-              1,
+                minValue(coordsList[0].ordinate, coordsList[1].ordinate) +
+                1,
             );
             number = checkAddClass(counter);
             const clazz = "horizontal-" + size + "-" + number;
@@ -138,14 +138,14 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
         // for linter @ts-expect-error
         const oldClass =
           changedObject[
-          (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
-            ]?.valueOf().props.className;
+            (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
+          ]?.valueOf().props.className;
         const splited = oldClass.split(" ");
         if (!splited.includes("explose")) {
           if (splited[1] == undefined) {
             changedObject[
-            (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
-              ] = (
+              (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
+            ] = (
               <div
                 className={`${oldClass} miss`}
                 key={JSON.stringify({
@@ -157,8 +157,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
           } else {
             if (!splited.includes("miss")) {
               changedObject[
-              (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
-                ] = (
+                (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
+              ] = (
                 <div
                   className={`${oldClass}`}
                   key={JSON.stringify({
@@ -180,8 +180,7 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
     <>
       <div className="ground-wrapper">
         {" "}
-        <div className="grid-container">{objects.map((el) => el)}</div>
-        {" "}
+        <div className="grid-container">{objects.map((el) => el)}</div>{" "}
         <div className="ground__name_wrapper">
           <img src={img_src} alt="ground"></img>
           <p className="ground__name">{text}</p>{" "}

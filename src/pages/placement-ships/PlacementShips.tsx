@@ -3,27 +3,22 @@ import "src/shared/ui/layout/Layout.css";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { arrangeShips, getGameState } from "src/entities/game/gameApi";
+import { getGameState } from "src/entities/game/gameApi";
 import ShipBlock from "src/features/ship-block/ShipBlock";
 import CountDownTimer from "src/features/timer/CountDownTimer";
 import { gameStateType } from "src/pages/battleground/Battleground";
-import Button from "src/shared/ui/button/Button";
-import Layout from "src/shared/ui/layout/Layout";
-
-import Ground, { Block } from "../../shared/ui/ground/Ground";
 import { get } from "src/shared/api/fetcher";
+import Button from "src/shared/ui/button/Button";
 import MyGround from "src/shared/ui/ground/MyGround";
+import Layout from "src/shared/ui/layout/Layout";
 
 export type shipsType = { axis: number; ordinate: number }[][];
 const PlacementShips = () => {
-  const [countShips, setCountShips] = useState<number[]>([1, 2, 3, 4]);
-  const [objectsShipBlock, setObjectsShipBlock] = useState<Block[]>([]);
   const navigate = useNavigate();
   const sessionId = Number(localStorage.getItem("sessionId"));
   const [gameState, setGameState] = useState<gameStateType>();
   const myShipsString = localStorage.getItem("myShips");
   useEffect(() => {
-
     const intervalId = setInterval(() => {
       if (sessionId) {
         const getStateProm = getGameState(sessionId);
@@ -44,7 +39,6 @@ const PlacementShips = () => {
       // arrangeShips(sessionId, result);
       localStorage.setItem("myShips", JSON.stringify(result));
     });
-
   }
 
   useEffect(() => {
@@ -78,15 +72,12 @@ const PlacementShips = () => {
                 d="M0 0h24v24H0z"
                 id="mainIconPathAttribute"
                 filter="url(#shadow)"
-              ></path>
-              {" "}
+              ></path>{" "}
               <path
                 d="M5.828 7l2.536 2.536L6.95 10.95 2 6l4.95-4.95 1.414 1.414L5.828 5H13a8 8 0 1 1 0 16H4v-2h9a6 6 0 1 0 0-12H5.828z"
                 id="mainIconPathAttribute"
-              ></path>
-              {" "}
-            </g>
-            {" "}
+              ></path>{" "}
+            </g>{" "}
             <filter id="shadow">
               <feDropShadow
                 id="shadowValue"
@@ -114,9 +105,12 @@ const PlacementShips = () => {
       }
       footer={
         <>
-          <Button className="randomise-button" onClick={() => {
-            randomShips();
-          }}>
+          <Button
+            className="randomise-button"
+            onClick={() => {
+              randomShips();
+            }}
+          >
             RANDOMISE
             <svg
               width="46"
