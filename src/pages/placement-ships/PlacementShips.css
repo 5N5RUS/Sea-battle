@@ -128,3 +128,37 @@
   color: #d9d9d9;
   background: white;
 }
+
+.question_button {
+    fill: white;
+}
+
+.question_button:disabled {
+    background: none;
+    fill: #D9D9D9;
+}
+
+.rules-button:disabled {
+    background: none;
+}
+
+.reset-button:disabled {
+    color: #D9D9D9;
+    background: white;
+    border-color: #D9D9D9;
+    box-shadow: 4px 4px 0 #D9D9D9;
+}
+
+.randomise-button:disabled {
+    color: #D9D9D9;
+    background: white;
+    border-color: #D9D9D9;
+    box-shadow: 4px 4px 0 #D9D9D9;
+}
+
+.ready-button:disabled {
+    color: #D9D9D9;
+    background: white;
+    border-color: #D9D9D9;
+    box-shadow: 4px 4px 0 #D9D9D9;
+}

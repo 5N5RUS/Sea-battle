@@ -20,6 +20,9 @@ export const post = async <D>(url: string, data: D) => {
     },
     body: JSON.stringify(data),
   });
+  if (response.status == 404) {
+    return "404";
+  }
   return response.json();
 };
 
