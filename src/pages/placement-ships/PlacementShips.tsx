@@ -3,12 +3,10 @@ import "src/shared/ui/layout/Layout.css";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getGameState } from "src/entities/game/gameApi";
+import { arrangeShips, getGameState } from "src/entities/game/gameApi";
 import ShipBlock from "src/features/ship-block/ShipBlock";
 import CountDownTimer from "src/features/timer/CountDownTimer";
 import { gameStateType } from "src/pages/battleground/Battleground";
-import Button from "src/shared/ui/button/Button";
-import Layout from "src/shared/ui/layout/Layout";
 
 import { get } from "src/shared/api/fetcher";
 import Button from "src/shared/ui/button/Button";
