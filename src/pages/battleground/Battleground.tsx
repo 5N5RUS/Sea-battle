@@ -9,6 +9,7 @@ import MyGround, { targetCellType } from "src/shared/ui/ground/MyGround";
 import Layout from "src/shared/ui/layout/Layout";
 
 import Ground, { Block } from "../../shared/ui/ground/Ground";
+import { post } from "src/shared/api/fetcher";
 
 export type gameStateType = {
   id: number;
@@ -38,6 +39,10 @@ const Battleground = () => {
   const [isMyTurn, setMyTurn] = useState(false);
   const [targetPlayer, setTargetPlayer] = useState<number>();
   const [targetCell, setTargetCell] = useState<targetCellType>();
+  let myShips = localStorage.getItem("myShips");
+  if (myShips) {
+    myShips = JSON.parse(myShips);
+  }
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (sessionId) {
@@ -49,10 +54,12 @@ const Battleground = () => {
           if (res.turnPlayerId == userId) {
             setMyTurn(true);
           }
+          if (!res.gameState) {
+            navigate("/mainscreen");
+          }
         });
       }
     }, 1000);
-
     return () => clearInterval(intervalId);
   }, [sessionId, userId]);
   const navigate = useNavigate();
@@ -62,7 +69,7 @@ const Battleground = () => {
         <Button
           className={"back-button"}
           onClick={() => {
-            navigate("/mainscreen");
+            post(`session/${sessionId}/leave`, null);
           }}
           disabled={false}
         >
@@ -92,6 +99,7 @@ const Battleground = () => {
     >
       <div className="main__battlegrounds">
         <MyGround
+          myShips={myShips}
           img_src="src/assets/svgs/my-player.svg"
           text="Your ships"
           isMyTurn={isMyTurn}
