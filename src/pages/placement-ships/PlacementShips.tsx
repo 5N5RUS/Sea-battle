@@ -10,20 +10,20 @@ import { gameStateType } from "src/pages/battleground/Battleground";
 import Button from "src/shared/ui/button/Button";
 import Layout from "src/shared/ui/layout/Layout";
 
-import Ground, { Block } from "../../shared/ui/ground/Ground";
 import { get } from "src/shared/api/fetcher";
 import MyGround from "src/shared/ui/ground/MyGround";
 
 export type shipsType = { axis: number; ordinate: number }[][];
 const PlacementShips = () => {
-  const [countShips, setCountShips] = useState<number[]>([1, 2, 3, 4]);
-  const [objectsShipBlock, setObjectsShipBlock] = useState<Block[]>([]);
+  const [errorText, setErrorText] = useState("");
+  const [myShips, setMyShips] = useState();
   const navigate = useNavigate();
+  const [block, setBlock] = useState(false);
   const sessionId = Number(localStorage.getItem("sessionId"));
   const [gameState, setGameState] = useState<gameStateType>();
   const myShipsString = localStorage.getItem("myShips");
   useEffect(() => {
-
+    localStorage.removeItem("myShips");
     const intervalId = setInterval(() => {
       if (sessionId) {
         const getStateProm = getGameState(sessionId);
@@ -36,12 +36,12 @@ const PlacementShips = () => {
   }, [sessionId]);
 
   function randomShips() {
-    if (myShipsString != null) {
-      localStorage.setItem("myShips", null);
+    if (myShipsString != undefined) {
+      localStorage.removeItem("myShips");
     }
     const ship = get(`session/${sessionId}/arrangement/random`);
     ship.then((result) => {
-      // arrangeShips(sessionId, result);
+      setMyShips(result);
       localStorage.setItem("myShips", JSON.stringify(result));
     });
 
@@ -58,97 +58,77 @@ const PlacementShips = () => {
         <Button
           className={"back-button"}
           onClick={() => {
-            navigate("/placementships");
+            navigate("/mainscreen");
           }}
           disabled={false}
         >
-          <svg
-            color="#6BC9E6"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 22 24"
-            id="iconchangecolor"
-            height="80%"
-            width="100%"
-          >
-            {" "}
-            <g>
-              {" "}
-              <path
-                fill="none"
-                d="M0 0h24v24H0z"
-                id="mainIconPathAttribute"
-                filter="url(#shadow)"
-              ></path>
-              {" "}
-              <path
-                d="M5.828 7l2.536 2.536L6.95 10.95 2 6l4.95-4.95 1.414 1.414L5.828 5H13a8 8 0 1 1 0 16H4v-2h9a6 6 0 1 0 0-12H5.828z"
-                id="mainIconPathAttribute"
-              ></path>
-              {" "}
-            </g>
-            {" "}
-            <filter id="shadow">
-              <feDropShadow
-                id="shadowValue"
-                stdDeviation=".5"
-                dx="0"
-                dy="0"
-                floodColor=""
-              ></feDropShadow>
-            </filter>
-          </svg>
+          <img
+            src="src/assets/svgs/back-arrow.svg"
+            alt="icon for back button"
+          />
         </Button>
       }
       timer={<CountDownTimer minutes={3} seconds={0} />}
       text={<p className="player-turn">Drag & drop, click to rotate</p>}
       help_button={
-        <Button
+        <button
           className={"rules-button"}
           onClick={() => {
             alert("I need help you");
           }}
-          disabled={false}
+          disabled={block}
         >
-          ?
-        </Button>
+          <svg width="160" height="110" viewBox="0 0 160 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_d_774_6692)">
+              <path fillRule="evenodd" clipRule="evenodd"
+                    d="M12 2C6.47715 2 2 6.47715 2 12V76C2 81.5229 6.47715 86 12 86H128L154 103V86V12C154 6.47715 149.523 2 144 2H12Z"
+                    fill="white" />
+              <path
+                d="M128 86L128.821 84.7445L128.447 84.5H128V86ZM154 103L153.179 104.255L155.5 105.773V103H154ZM3.5 12C3.5 7.30558 7.30558 3.5 12 3.5V0.5C5.64873 0.5 0.5 5.64873 0.5 12H3.5ZM3.5 76V12H0.5V76H3.5ZM12 84.5C7.30558 84.5 3.5 80.6944 3.5 76H0.5C0.5 82.3513 5.64872 87.5 12 87.5V84.5ZM128 84.5H12V87.5H128V84.5ZM127.179 87.2555L153.179 104.255L154.821 101.745L128.821 84.7445L127.179 87.2555ZM155.5 103V86H152.5V103H155.5ZM152.5 12V86H155.5V12H152.5ZM144 3.5C148.694 3.5 152.5 7.30558 152.5 12H155.5C155.5 5.64873 150.351 0.5 144 0.5V3.5ZM12 3.5H144V0.5H12V3.5Z"
+                fill="#2C2C2C" />
+            </g>
+            <path
+              d="M79.104 67H68.376V56.416H79.104V67ZM74.856 19.84C85.008 19.84 91.056 26.752 91.056 33.376C91.056 40.504 86.808 45.4 78.528 47.848L78.456 50.584H69.024L68.448 38.632C68.448 38.632 71.04 38.488 73.848 37.912H73.992C80.256 36.544 80.256 34.6 80.256 33.376C80.256 32.584 78.672 30.64 74.856 30.64C70.32 30.64 67.008 33.304 67.008 33.304L60.096 25.096C61.32 24.088 66.936 19.84 74.856 19.84Z"
+              fill="#2C2C2C" />
+            <defs>
+              <filter id="filter0_d_774_6692" x="0.5" y="0.5" width="159" height="109.273" filterUnits="userSpaceOnUse"
+                      colorInterpolationFilters="sRGB">
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                               result="hardAlpha" />
+                <feOffset dx="4" dy="4" />
+                <feComposite in2="hardAlpha" operator="out" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0.172549 0 0 0 0 0.172549 0 0 0 0 0.172549 0 0 0 1 0" />
+                <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_774_6692" />
+                <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_774_6692" result="shape" />
+              </filter>
+            </defs>
+          </svg>
+        </button>
       }
       footer={
         <>
-          <Button className="randomise-button" onClick={() => {
-            randomShips();
-          }}>
-            RANDOMISE
-            <svg
-              width="46"
-              height="39"
-              viewBox="0 0 46 39"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+          <div className={"ready-block"}>
+            <p className={"error-text"}> {errorText}</p>
+            <Button
+              className="ready-button"
+              disabled={!myShips}
+              onClick={() => {
+                if (myShips) {
+                  arrangeShips(sessionId, myShips);
+                  setBlock(true);
+                } else {
+                  setErrorText("Not all ships are deployed!");
+                }
+              }}
             >
-              <path
-                d="M34.6742 27.6804C32.7941 31.13 29.7856 33.8134 26.1642 35.2771C22.5432 36.7406 18.5308 36.8953 14.8096 35.7153C11.0881 34.5352 7.88491 32.0919 5.74832 28.798C3.61151 25.5038 2.67485 21.5639 3.10023 17.6501C3.52561 13.7363 5.28617 10.0948 8.07828 7.34504C10.8701 4.59554 14.5203 2.90747 18.4062 2.56479C22.2921 2.22211 26.1772 3.24558 29.4 5.46335C32.6231 7.68136 34.9855 10.9577 36.0806 14.7365"
-                stroke="#6BC9E6"
-                strokeWidth="5"
-              />
-              <path
-                d="M38.4499 18.1468C38.3849 18.917 37.5125 19.3291 36.8822 18.8873L28.4162 12.9544C27.7877 12.5139 27.8712 11.5546 28.5666 11.2261L37.9056 6.81482C38.601 6.48637 39.3877 7.03469 39.3229 7.80259L38.4499 18.1468Z"
-                fill="#6BC9E6"
-              />
-            </svg>
-          </Button>
-
-          <Button
-            className="ready-button"
-            onClick={() => {
-              navigate("/battleground");
-            }}
-          >
-            READY TO PLAY
-          </Button>
+              READY TO PLAY
+            </Button>
+          </div>
         </>
       }
     >
-      <div className="main">
+      <div className="main_placement-ship">
         <li className="ships-list">
           <ShipBlock className="battleship" text="Battleship" ship_count={1} />
 
@@ -169,7 +149,16 @@ const PlacementShips = () => {
           isMyTurn={false}
           img_src={undefined}
         />
-        <Button className="reset-button">Reset</Button>
+        <div className={"right-menu"}>
+          <div className={"right-buttons"}>
+            <Button className="reset-button" disabled={block}>Reset</Button>
+            <Button className="randomise-button" disabled={block} onClick={() => {
+              randomShips();
+            }}>
+              RANDOM
+            </Button>
+          </div>
+        </div>
       </div>
     </Layout>
   );
