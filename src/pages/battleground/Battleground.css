@@ -12,8 +12,7 @@
 }
 
 .back-button:active {
-  box-shadow:
-    4px 4px 0 black,
+    box-shadow: 1px 1px 0 black,
     inset 2px 3px 0 #b5b5b5;
 }
 
