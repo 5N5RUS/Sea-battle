@@ -30,6 +30,7 @@ export type gameStateType = {
 };
 
 const Battleground = () => {
+  const [countShips, setCountShips] = useState<number[]>([1, 2, 3, 4]);
   const [objectsShipBlock, setObjectsShipBlock] = useState<Block[]>([]);
   const sessionId = Number(localStorage.getItem("sessionId"));
   const [gameState, setGameState] = useState<gameStateType>();
@@ -99,6 +100,8 @@ const Battleground = () => {
         />
 
         <Ground
+          countShips={countShips}
+          setCountShips={setCountShips}
           gameState={gameState}
           img_src="src/assets/svgs/enemy-player.svg"
           text="Enemy’s ships"
@@ -127,7 +130,7 @@ const Battleground = () => {
             wordWrap: "break-word",
           }}
         >
-          — 1
+          — {countShips[0]}
         </div>
         <div
           style={{
@@ -141,7 +144,7 @@ const Battleground = () => {
             wordWrap: "break-word",
           }}
         >
-          — 2
+          — {countShips[1]}
         </div>
         <div
           style={{
@@ -155,7 +158,7 @@ const Battleground = () => {
             wordWrap: "break-word",
           }}
         >
-          — 3
+          — {countShips[2]}
         </div>
         <div
           style={{
@@ -169,7 +172,7 @@ const Battleground = () => {
             wordWrap: "break-word",
           }}
         >
-          — 4
+          — {countShips[3]}
         </div>
         <div
           className={"full-one"}
