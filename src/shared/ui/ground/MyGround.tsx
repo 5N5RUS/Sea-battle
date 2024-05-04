@@ -140,7 +140,7 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer }: GroundProps) => {
     }
     setObjects(changedObject);
 
-  }, [myShipsString, objects]);
+  }, [myShipsString]);
   useEffect(() => {
     const changedObject = objects;
     if (targetPlayer == playerId && targetCell) {
