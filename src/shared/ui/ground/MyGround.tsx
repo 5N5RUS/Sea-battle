@@ -41,7 +41,7 @@ const startObjects = Array.from({ length: 100 }, (_, index) => (
     })}
     className="my-grid-item"
   ></div>
-))  ;
+));
 
 
 const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundProps) => {
@@ -55,7 +55,9 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundPr
       if (myShipsJson) {
         objects.map((el) => {
           //  may be error@ts-expect-error
-          if (el?.valueOf().props.className.includes("grid-item")) {
+          if (
+            el?.valueOf().props.className.includes("grid-item")
+          ) {
             flag = false;
           }
         });
@@ -163,7 +165,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundPr
       }
     }
     setObjects(changedObject);
-  }, [myShips, objects]);
+    console.log("RENDER");
+  }, [myShips]);
   useEffect(() => {
     const changedObject = objects;
     if (targetPlayer == playerId && targetCell) {
@@ -210,7 +213,7 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundPr
       }
     }
     setObjects(changedObject);
-  }, [targetCell, objects, playerId, targetPlayer]);
+  }, [targetCell, playerId, targetPlayer]);
   return (
     <>
       <div className="ground-wrapper">

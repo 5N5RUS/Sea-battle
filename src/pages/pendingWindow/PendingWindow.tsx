@@ -2,7 +2,7 @@ import "./PendingWindow.css";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { deleteSession, getGameState } from "src/entities/game/gameApi";
+import { deleteSession } from "src/entities/game/gameApi";
 import Bubbles1 from "src/shared/ui/bubbles/Bubbles1";
 import Bubbles2 from "src/shared/ui/bubbles/Bubbles2";
 import { useAppSelector } from "src/shared/hooks/ReduxHooks";
