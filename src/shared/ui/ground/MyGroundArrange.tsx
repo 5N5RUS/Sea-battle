@@ -34,15 +34,13 @@ export function checkAddClass(num: number) {
   }
 }
 
-
-const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips, initialState }: GroundProps) => {
+const MyGroundArrange = ({ text, img_src, targetCell, targetPlayer, myShips, initialState }: GroundProps) => {
   const [objects, setObjects] = useState<React.ReactNode[]>(initialState);
-  const myShipsString = localStorage.getItem("myShips");
   const playerId = Number(localStorage.getItem("userId"));
   useEffect(() => {
     let flag = true;
-    let changedObject = objects;
-    if (myShipsString) {
+    let changedObject = [...objects];
+    if (myShips) {
       const myShipsJson = myShips;
       if (myShipsJson) {
         objects.map((el) => {
@@ -54,7 +52,7 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips, initialSta
         if (!flag) {
           changedObject = [];
         }
-        if (typeof myShipsJson !== "string") {
+        if (typeof myShipsJson != "string") {
           myShipsJson.map((coordsList: { axis: number; ordinate: number }[]) => {
             if (coordsList[0].axis != coordsList[1].axis) {
               let counter: number = 1;
@@ -154,9 +152,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips, initialSta
         );
       }
     }
-
     setObjects(changedObject);
-  }, [myShipsString, myShips]);
+  }, [myShips]);
   useEffect(() => {
     const changedObject = objects;
     if (targetPlayer == playerId && targetCell) {
@@ -164,9 +161,6 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips, initialSta
         changedObject[(targetCell?.axis - 1) * 10 + targetCell.ordinate - 1]
       ) {
         // for linter @ts-expect-error
-        // if (React.isValidElement(el) && el.props.className?.includes("grid-item")) {
-        //   flag = false;
-        // }
         const el = changedObject[
         (targetCell?.axis - 1) * 10 + targetCell.ordinate - 1
           ];
@@ -224,4 +218,4 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips, initialSta
     </>
   );
 };
-export default MyGround;
+export default MyGroundArrange;

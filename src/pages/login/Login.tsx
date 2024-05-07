@@ -56,7 +56,7 @@ const Login = () => {
   const signUpUser = async (userData: { login: string; password: string }) => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:8080/users/login", {
+      const response = await fetch("http://sea-battle.7bits.it/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -148,7 +148,7 @@ const Login = () => {
           )}
           <p className="card__navigate">
             Don&apos;t have an account?{" "}
-            <a href="http://localhost:5173/signup" className="navigate_href">
+            <a href="http://sea-battle.7bits.it/signup" className="navigate_href">
               Sign up
             </a>
           </p>

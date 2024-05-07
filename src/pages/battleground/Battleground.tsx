@@ -10,7 +10,6 @@ import Layout from "src/shared/ui/layout/Layout";
 
 import Ground, { Block } from "../../shared/ui/ground/Ground";
 import { post } from "src/shared/api/fetcher";
-import Bubbles1 from "@/shared/ui/bubbles/Bubbles1";
 
 export type gameStateType = {
   id: number;
@@ -40,16 +39,15 @@ const Battleground = () => {
     const [isMyTurn, setMyTurn] = useState(false);
     const [targetPlayer, setTargetPlayer] = useState<number>();
     const [targetCell, setTargetCell] = useState<targetCellType>();
-    const [myShips, setMyShips] = useState();
+    const [myShips, setMyShips] = useState(null);
     const [startDate, setStartDate] = useState<Date>();
-
     useEffect(() => {
-      const myShips = localStorage.getItem("myShips");
-      if (myShips) {
-        setMyShips(JSON.parse(myShips));
-      }
+      const myShipz = localStorage.getItem("myShips");
+      if (myShipz)
+        setMyShips(JSON.parse((myShipz)));
     }, []);
     useEffect(() => {
+
       const intervalId = setInterval(() => {
         if (sessionId) {
           const getStateProm = getGameState(sessionId);
@@ -57,7 +55,7 @@ const Battleground = () => {
             setGameState(res);
             setTargetPlayer(res.targetPlayer);
             setTargetCell(res.playerTurnCoords);
-            setStartDate(res.startGameDate);
+            setStartDate(res.playerTurnStartDate);
             if (res.turnPlayerId == userId) {
               setMyTurn(true);
             }
@@ -71,7 +69,7 @@ const Battleground = () => {
     }, [sessionId, userId]);
     const navigate = useNavigate();
     if (!startDate) {
-      return <Bubbles1 />;
+      return;
     }
     return (
       <Layout
@@ -89,7 +87,7 @@ const Battleground = () => {
             />
           </Button>
         }
-        timer={<CountDownTimer startDate={startDate} time={180} />}
+        timer={<CountDownTimer startDate={startDate} time={30} />}
         text={
           <p className="player-turn">
             {gameState?.turnPlayerId == userId ? "your turn" : "enemy's turn"}
@@ -137,6 +135,7 @@ const Battleground = () => {
                 <div className="battlegrounds__nameofcell-my"> J</div>
               </div>
               <MyGround
+                initialState={[]}
                 myShips={myShips}
                 img_src="src/assets/svgs/my-player.svg"
                 text="Your ships"

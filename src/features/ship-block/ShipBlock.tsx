@@ -14,7 +14,7 @@ const ShipBlock = ({ ship_count, className, text, status, disabled }: ShipBlockP
 
   const ships = [];
   for (let i = 0; i < n; i++) {
-    ships.push(<div className={`${className} ${status ? "hide" : null} ${disabled ? "border-disabled" : ""}`}></div>);
+    ships.push(<div key={i} className={`${className} ${status ? "hide" : null} ${disabled ? "border-disabled" : ""}`}></div>);
   }
   return (
     <>

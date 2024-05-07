@@ -27,7 +27,7 @@ const MainScreen = () => {
   });
 
   const connectToWebSocket = (sessionId: number) => {
-    const sock = new SockJS(`http://localhost:8080/sea`);
+    const sock = new SockJS(`http://http://sea-battle.7bits.it/api/sea`);
     const client = Stomp.over(sock);
     client.connect({}, () => {
       console.log("Connected: ");

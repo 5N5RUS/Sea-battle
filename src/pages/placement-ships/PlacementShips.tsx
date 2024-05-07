@@ -1,22 +1,33 @@
 import "src/pages/placement-ships/PlacementShips.css";
 import "src/shared/ui/layout/Layout.css";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { arrangeShips, getGameState } from "src/entities/game/gameApi";
 import ShipBlock from "src/features/ship-block/ShipBlock";
 import CountDownTimer from "src/features/timer/CountDownTimer";
 import { get } from "src/shared/api/fetcher";
 import Button from "src/shared/ui/button/Button";
-import MyGround from "src/shared/ui/ground/MyGround";
 import Layout from "src/shared/ui/layout/Layout";
 import { useAppSelector } from "src/shared/hooks/ReduxHooks";
 import ModalWindow from "src/shared/ui/modal-window/ModalWindow";
 import { whoami } from "src/entities/user/userApi";
 import { userDataType } from "src/shared/ui/ground/Ground";
+import MyGroundArrange from "src/shared/ui/ground/MyGroundArrange";
 
 export type shipsType = { axis: number; ordinate: number }[][];
 const PlacementShips = () => {
+
+  const startObjects = Array.from({ length: 100 }, (_, index) => (
+    <div
+      key={JSON.stringify({
+        axis: Math.floor(index / 10) * 10,
+        ordinate: (index % 10) * 10,
+      })}
+      className="my-grid-item"
+    ></div>
+  ));
+
   const [startTimer, setStartTimer] = useState<Date>();
   const client = useAppSelector(state => state["CLIENT_REDUCER"].client);
   const [errorText, setErrorText] = useState("");
@@ -38,7 +49,6 @@ const PlacementShips = () => {
         getStateProm.then((res) => {
           setGameState(res.gameState);
           setStartTimer(res.arrangementStartDate);
-          console.log(res.gameState);
           if (res.gameState == "STATUS_CANCELED") {
             navigate("/mainscreen");
           }
@@ -46,7 +56,6 @@ const PlacementShips = () => {
             whoami().then((response: userDataType) => {
               setMyScores(response.rating);
             });
-            console.log(res.winnerId);
             if (res.winnerId) {
               setWinnerId(res.winnerId);
               setShowModalWindow(true);
@@ -230,7 +239,8 @@ const PlacementShips = () => {
             <div className="battlegrounds__nameofcell-my"> 10</div>
           </div>
           <div className="battlegrounds__arraycells_wrapper-column">
-            <MyGround
+            <MyGroundArrange
+              initialState={startObjects}
               targetPlayer={undefined}
               text={""}
               targetCell={undefined}
