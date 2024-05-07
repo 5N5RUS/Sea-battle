@@ -36,6 +36,7 @@ const Battleground = () => {
   const sessionId = Number(localStorage.getItem("sessionId"));
   const [gameState, setGameState] = useState<gameStateType>();
   const userId = Number(localStorage.getItem("userId"));
+  const [startTimer, setStartTimer] = useState<Date>();
   const [isMyTurn, setMyTurn] = useState(false);
   const [targetPlayer, setTargetPlayer] = useState<number>();
   const [targetCell, setTargetCell] = useState<targetCellType>();
@@ -48,6 +49,7 @@ const Battleground = () => {
       if (sessionId) {
         const getStateProm = getGameState(sessionId);
         getStateProm.then((res) => {
+          setStartTimer(res.playerTurnStartDate);
           setGameState(res);
           setTargetPlayer(res.targetPlayer);
           setTargetCell(res.playerTurnCoords);
@@ -63,6 +65,9 @@ const Battleground = () => {
     return () => clearInterval(intervalId);
   }, [sessionId, userId]);
   const navigate = useNavigate();
+  if (!startTimer) {
+    return;
+  }
   return (
     <Layout
       back_button={
@@ -79,7 +84,7 @@ const Battleground = () => {
           />
         </Button>
       }
-      timer={<CountDownTimer minutes={1} seconds={0} />}
+      timer={<CountDownTimer startDate={startTimer} time={60} />}
       text={
         <p className="player-turn">
           {gameState?.turnPlayerId == userId ? "your turn" : "enemy's turn"}
