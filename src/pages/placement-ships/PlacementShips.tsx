@@ -11,10 +11,11 @@ import Button from "src/shared/ui/button/Button";
 import MyGround from "src/shared/ui/ground/MyGround";
 import Layout from "src/shared/ui/layout/Layout";
 import { useAppSelector } from "src/shared/hooks/ReduxHooks";
+import WebSocketFactory from "src/util/websocket/WebSocketFactory";
 
 export type shipsType = { axis: number; ordinate: number }[][];
 const PlacementShips = () => {
-  const client = useAppSelector(state => state["CLIENT_REDUCER"].client);
+  // const client = useAppSelector(state => state["CLIENT_REDUCER"].client);
   const [errorText, setErrorText] = useState("");
   const [myShips, setMyShips] = useState();
   const navigate = useNavigate();
@@ -22,35 +23,52 @@ const PlacementShips = () => {
   const sessionId = Number(localStorage.getItem("sessionId"));
   const [gameState, setGameState] = useState<string>();
   const myShipsString = localStorage.getItem("myShips");
-  useEffect(() => {
-    localStorage.removeItem("myShips");
-    const intervalId = setInterval(() => {
-      if (sessionId) {
-        const getStateProm = getGameState(sessionId);
-        getStateProm.then((res) => {
-          setGameState(res.gameState);
-        });
-      }
-    }, 1000);
-    return () => clearInterval(intervalId);
-  }, [sessionId]);
 
-
+  const webSocket = WebSocketFactory(sessionId);
   // useEffect(() => {
-  //   console.log("1");
-  //   if (client) {
-  //     console.log("2");
-  //     client.connect({}, () => {
-  //       client.subscribe(`/topic/sea/${sessionId}`, (message) => {
-  //         console.log(JSON.parse(message.body));
-  //         console.log("message:", message.headers);
-  //         if (JSON.parse(message.body).status == "STATUS_GAME") {
-  //           setGameState("STATUS_GAME");
-  //         }
+  //   localStorage.removeItem("myShips");
+  //   const intervalId = setInterval(() => {
+  //     if (sessionId) {
+  //       const getStateProm = getGameState(sessionId);
+  //       getStateProm.then((res) => {
+  //         setGameState(res.gameState);
   //       });
-  //     });
-  //   }
-  // }, [client, sessionId]);
+  //     }
+  //   }, 1000);
+  //   return () => clearInterval(intervalId);
+  // }, [sessionId]);
+
+
+  useEffect(() => {
+    // console.log("1");
+    // if (client) {
+    //   console.log("2");
+    //   client.connect({}, () => {
+    //     client.subscribe(`/topic/sea/${sessionId}`, (message) => {
+    //       console.log(JSON.parse(message.body));
+    //       console.log("message:", message.headers);
+    //       if (JSON.parse(message.body).status == "STATUS_GAME") {
+    //         setGameState("STATUS_GAME");
+    //       }
+    //     });
+    //   });
+    // }
+
+    if (webSocket.connected()) {
+      webSocket.updateCallback(
+        (message) => {
+          if (message) {
+            console.log(JSON.parse(message.body));
+            console.log("message:", message.headers);
+            if (JSON.parse(message.body).status == "STATUS_GAME") {
+              setGameState("STATUS_GAME");
+            }
+          }
+        }
+      )
+    }
+
+  }, [sessionId]);
 
   function randomShips() {
     if (myShipsString != undefined) {
@@ -65,6 +83,7 @@ const PlacementShips = () => {
 
   useEffect(() => {
     if (gameState === "STATUS_GAME") {
+      webSocket.unsubscribe();
       navigate("/battleground");
     }
   }, [gameState, navigate]);

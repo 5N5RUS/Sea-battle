@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { whoami } from "src/entities/user/userApi";
 import { post } from "src/shared/api/fetcher";
 import MainCard from "src/widgets/main-card/MainCard";
-import { Client, Stomp } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
 import { useAppDispatch } from "src/shared/hooks/ReduxHooks";
+import WebSocketFactory, { WebSocketType } from "src/util/websocket/WebSocketFactory";
 
 const MainScreen = () => {
   const [userData, setUserData] = useState();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     whoami()
       .then((userData) => {
@@ -26,23 +26,25 @@ const MainScreen = () => {
       });
   });
 
-  const connectToWebSocket = (sessionId: number) => {
-    const sock = new SockJS(`http://localhost:8080/sea`);
-    const client = Stomp.over(sock);
-    client.connect({}, () => {
-      console.log("Connected: ");
-      client.subscribe(`/topic/sea/${sessionId}`, function(message) {
-        console.log("message:", JSON.parse(message.body).status);
-      });
-    });
-    dispatch({ type: "CLIENT/SUCCESS", client: client });
-    sock.onopen = function() {
-      console.log("WebSocket connection established.");
-    };
-
-    sock.onclose = function() {
-      console.log("WebSocket connection closed.");
-    };
+  const connectToWebSocket = (webSocket: WebSocketType) => {
+    webSocket.connect();
+    //
+    // const sock = new SockJS(`http://localhost:8080/sea`);
+    // const client = Stomp.over(sock);
+    // client.connect({}, () => {
+    //   console.log("Connected: ");
+    //   client.subscribe(`/topic/sea/${sessionId}`, function(message) {
+    //     console.log("message:", JSON.parse(message.body).status);
+    //   });
+    // });
+    // dispatch({ type: "CLIENT/SUCCESS", client: client });
+    // sock.onopen = function() {
+    //   console.log("WebSocket connection established.");
+    // };
+    //
+    // sock.onclose = function() {
+    //   console.log("WebSocket connection closed.");
+    // };
   };
 
 
@@ -54,10 +56,16 @@ const MainScreen = () => {
         console.log("Session created successfully:", data);
         localStorage.setItem("sessionId", data.id);
         if (data.gameState) {
-          connectToWebSocket(data.id);
+          const webSocket: WebSocketType =  WebSocketFactory(data.id,
+            (message) => {
+            message ? console.log("message:", JSON.parse(message.body)) : ""
+            });
+          connectToWebSocket(webSocket)
           if (data.gameState === "STATUS_PENDING") {
+            webSocket.unsubscribe();
             navigate("/pendingWindow");
           } else {
+            webSocket.unsubscribe();
             navigate("/placementships");
           }
         }

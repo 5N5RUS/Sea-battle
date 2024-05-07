@@ -6,11 +6,15 @@ import { deleteSession, getGameState } from "src/entities/game/gameApi";
 import Bubbles1 from "src/shared/ui/bubbles/Bubbles1";
 import Bubbles2 from "src/shared/ui/bubbles/Bubbles2";
 import { useAppSelector } from "src/shared/hooks/ReduxHooks";
+import webSocketFactory, { WebSocketType } from "src/util/websocket/WebSocketFactory";
+import WebSocketFactory from "src/util/websocket/WebSocketFactory";
 
 const PendingWindow = () => {
   const navigate = useNavigate();
   const sessionId = Number(localStorage.getItem("sessionId"));
-  const client = useAppSelector(state => state["CLIENT_REDUCER"].client);
+  const webSocket: WebSocketType = WebSocketFactory(sessionId);
+
+  // const client = useAppSelector(state => state["CLIENT_REDUCER"].client);
   const [gameState, setGameState] = useState<string>();
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
@@ -25,20 +29,33 @@ const PendingWindow = () => {
   // }, [sessionId]);
 
   useEffect(() => {
-    if (client) {
-      client.connect({}, () => {
-        console.log("Connected: ");
-        client.subscribe(`/topic/sea/${sessionId}`, function(message) {
-          if (JSON.parse(message.body).status == "STATUS_ARRANGEMENT") {
-            setGameState("STATUS_ARRANGEMENT");
+    if (webSocket.connected()) {
+      webSocket.updateCallback(
+        (message) => {
+          if (message) {
+            if (JSON.parse(message.body).status == "STATUS_ARRANGEMENT") {
+              setGameState("STATUS_ARRANGEMENT")
+            }
           }
-        });
-      });
+        }
+      )
     }
+
+    // if (client) {
+    //   client.connect({}, () => {
+    //     console.log("Connected: ");
+    //     client.subscribe(`/topic/sea/${sessionId}`, function(message) {
+    //       if (JSON.parse(message.body).status == "STATUS_ARRANGEMENT") {
+    //         setGameState("STATUS_ARRANGEMENT");
+    //       }
+    //     });
+    //   });
+    // }
   }, []);
 
   useEffect(() => {
     if (gameState === "STATUS_ARRANGEMENT") {
+      webSocket.unsubscribe();
       navigate("/placementships");
     }
   }, [gameState, navigate]);
