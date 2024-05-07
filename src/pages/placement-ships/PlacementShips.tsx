@@ -11,17 +11,25 @@ import Button from "src/shared/ui/button/Button";
 import MyGround from "src/shared/ui/ground/MyGround";
 import Layout from "src/shared/ui/layout/Layout";
 import { useAppSelector } from "src/shared/hooks/ReduxHooks";
+import ModalWindow from "src/shared/ui/modal-window/ModalWindow";
+import { whoami } from "src/entities/user/userApi";
+import { userDataType } from "src/shared/ui/ground/Ground";
 
 export type shipsType = { axis: number; ordinate: number }[][];
 const PlacementShips = () => {
+  const [startTimer, setStartTimer] = useState<Date>();
   const client = useAppSelector(state => state["CLIENT_REDUCER"].client);
   const [errorText, setErrorText] = useState("");
   const [myShips, setMyShips] = useState();
   const navigate = useNavigate();
   const [block, setBlock] = useState(false);
+  const playerId = Number(localStorage.getItem("userId"));
   const sessionId = Number(localStorage.getItem("sessionId"));
+  const [winnerId, setWinnerId] = useState<number>();
   const [gameState, setGameState] = useState<string>();
+  const [showModalWindow, setShowModalWindow] = useState(false);
   const myShipsString = localStorage.getItem("myShips");
+  const [myScores, setMyScores] = useState<number>();
   useEffect(() => {
     localStorage.removeItem("myShips");
     const intervalId = setInterval(() => {
@@ -29,12 +37,26 @@ const PlacementShips = () => {
         const getStateProm = getGameState(sessionId);
         getStateProm.then((res) => {
           setGameState(res.gameState);
+          setStartTimer(res.arrangementStartDate);
+          console.log(res.gameState);
+          if (res.gameState == "STATUS_CANCELED") {
+            navigate("/mainscreen");
+          }
+          if (res.gameState == "STATUS_FINISH") {
+            whoami().then((response: userDataType) => {
+              setMyScores(response.rating);
+            });
+            console.log(res.winnerId);
+            if (res.winnerId) {
+              setWinnerId(res.winnerId);
+              setShowModalWindow(true);
+            }
+          }
         });
       }
     }, 1000);
     return () => clearInterval(intervalId);
   }, [sessionId]);
-
 
   // useEffect(() => {
   //   console.log("1");
@@ -68,6 +90,9 @@ const PlacementShips = () => {
       navigate("/battleground");
     }
   }, [gameState, navigate]);
+  if (!startTimer) {
+    return;
+  }
   return (
     <Layout
       back_button={
@@ -84,7 +109,7 @@ const PlacementShips = () => {
           />
         </Button>
       }
-      timer={<CountDownTimer minutes={3} seconds={0} />}
+      timer={<CountDownTimer time={60} startDate={startTimer} />}
       text={<p
         className="player-turn">{!block ? "drag & drop, click to rotate" : "waiting for the enemy's readiness"}
       </p>}
@@ -174,6 +199,7 @@ const PlacementShips = () => {
         </>
       }
     >
+      {showModalWindow && winnerId ? <ModalWindow winnerId={winnerId} scores={myScores} /> : null}
       <div className="main_placement-ship">
         <li className="ships-list">
           <ShipBlock className={`battleship`} text="Battleship" disabled={block} ship_count={1} status={!!myShips} />
