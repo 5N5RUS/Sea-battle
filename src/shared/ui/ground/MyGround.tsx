@@ -14,7 +14,7 @@ type GroundProps = {
   targetCell: targetCellType | undefined;
   isMyTurn: boolean;
   targetPlayer: number | undefined;
-  myShips: null | string | undefined | [];
+  myShips: string | [] | null | undefined;
 };
 
 export function checkAddClass(num: number) {
@@ -33,14 +33,24 @@ export function checkAddClass(num: number) {
   }
 }
 
+const startObjects = Array.from({ length: 100 }, (_, index) => (
+  <div
+    key={JSON.stringify({
+      axis: Math.floor(index / 10) * 10,
+      ordinate: (index % 10) * 10,
+    })}
+    className="my-grid-item"
+  ></div>
+))  ;
+
+
 const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundProps) => {
-  const [objects, setObjects] = useState<React.ReactNode[]>([]);
-  const myShipsString = localStorage.getItem("myShips");
+  const [objects, setObjects] = useState<React.ReactNode[]>(startObjects);
   const playerId = Number(localStorage.getItem("userId"));
   useEffect(() => {
     let flag = true;
-    let changedObject = objects;
-    if (myShipsString) {
+    let changedObject = [...objects];
+    if (myShips) {
       const myShipsJson = myShips;
       if (myShipsJson) {
         objects.map((el) => {
@@ -52,7 +62,7 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundPr
         if (!flag) {
           changedObject = [];
         }
-        if (typeof myShipsJson !== "string") {
+        if (typeof myShipsJson != "string") {
           myShipsJson.map((coordsList: { axis: number; ordinate: number }[]) => {
             if (coordsList[0].axis != coordsList[1].axis) {
               let counter: number = 1;
@@ -152,9 +162,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundPr
         );
       }
     }
-
     setObjects(changedObject);
-  }, [myShipsString, myShips]);
+  }, [myShips, objects]);
   useEffect(() => {
     const changedObject = objects;
     if (targetPlayer == playerId && targetCell) {
@@ -206,7 +215,8 @@ const MyGround = ({ text, img_src, targetCell, targetPlayer, myShips }: GroundPr
     <>
       <div className="ground-wrapper">
         <div className="grid-container_wrapper">
-          <div className="grid-container">{objects.map((el) => el)}</div>
+          <div className="grid-container">{
+            objects.map((el) => el)}</div>
         </div>
         <div className="ground__name_wrapper">
           {img_src ? <img src={img_src} alt="ground"></img> : null}

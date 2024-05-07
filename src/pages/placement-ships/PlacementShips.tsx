@@ -6,20 +6,21 @@ import { useNavigate } from "react-router-dom";
 import { arrangeShips, getGameState } from "src/entities/game/gameApi";
 import ShipBlock from "src/features/ship-block/ShipBlock";
 import CountDownTimer from "src/features/timer/CountDownTimer";
-import { gameStateType } from "src/pages/battleground/Battleground";
 import { get } from "src/shared/api/fetcher";
 import Button from "src/shared/ui/button/Button";
 import MyGround from "src/shared/ui/ground/MyGround";
 import Layout from "src/shared/ui/layout/Layout";
+import { useAppSelector } from "src/shared/hooks/ReduxHooks";
 
 export type shipsType = { axis: number; ordinate: number }[][];
 const PlacementShips = () => {
+  const client = useAppSelector(state => state["CLIENT_REDUCER"].client);
   const [errorText, setErrorText] = useState("");
   const [myShips, setMyShips] = useState();
   const navigate = useNavigate();
   const [block, setBlock] = useState(false);
   const sessionId = Number(localStorage.getItem("sessionId"));
-  const [gameState, setGameState] = useState<gameStateType>();
+  const [gameState, setGameState] = useState<string>();
   const myShipsString = localStorage.getItem("myShips");
   useEffect(() => {
     localStorage.removeItem("myShips");
@@ -27,12 +28,29 @@ const PlacementShips = () => {
       if (sessionId) {
         const getStateProm = getGameState(sessionId);
         getStateProm.then((res) => {
-          setGameState(res);
+          setGameState(res.gameState);
         });
       }
     }, 1000);
     return () => clearInterval(intervalId);
   }, [sessionId]);
+
+
+  // useEffect(() => {
+  //   console.log("1");
+  //   if (client) {
+  //     console.log("2");
+  //     client.connect({}, () => {
+  //       client.subscribe(`/topic/sea/${sessionId}`, (message) => {
+  //         console.log(JSON.parse(message.body));
+  //         console.log("message:", message.headers);
+  //         if (JSON.parse(message.body).status == "STATUS_GAME") {
+  //           setGameState("STATUS_GAME");
+  //         }
+  //       });
+  //     });
+  //   }
+  // }, [client, sessionId]);
 
   function randomShips() {
     if (myShipsString != undefined) {
@@ -46,7 +64,7 @@ const PlacementShips = () => {
   }
 
   useEffect(() => {
-    if (gameState?.gameState === "STATUS_GAME") {
+    if (gameState === "STATUS_GAME") {
       navigate("/battleground");
     }
   }, [gameState, navigate]);
@@ -69,7 +87,7 @@ const PlacementShips = () => {
       timer={<CountDownTimer minutes={3} seconds={0} />}
       text={<p
         className="player-turn">{!block ? "drag & drop, click to rotate" : "waiting for the enemy's readiness"}
-        </p>}
+      </p>}
       help_button={
         <button
           className={"rules-button"}
@@ -186,7 +204,7 @@ const PlacementShips = () => {
             <div className="battlegrounds__nameofcell-my"> 10</div>
           </div>
           <div className="battlegrounds__arraycells_wrapper-column">
-           <MyGround
+            <MyGround
               targetPlayer={undefined}
               text={""}
               targetCell={undefined}
@@ -209,7 +227,7 @@ const PlacementShips = () => {
           </div>
         </div>
 
-       <div className={"right-menu"}>
+        <div className={"right-menu"}>
           <div className={"right-buttons"}>
             <Button className="reset-button" disabled={block} onClick={() => {
               localStorage.removeItem("myShips");
