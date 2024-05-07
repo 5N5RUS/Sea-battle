@@ -2,58 +2,86 @@ import "./SignUp.css";
 
 import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ClimbingBoxLoader } from "react-spinners";
 import MainCard from "src/widgets/main-card/MainCard";
 
 const SignUp = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const [usernameErrorOnSubmit, setUsernameErrorOnSubmit] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [dataError, setDataError] = useState("");
+  const [dataErrorOnSubmit, setDataErrorOnSubmit] = useState("");
   const [usernameInputErrorOnSubmit, setUsernameInputErrorOnSubmit] =
     useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordInputErrorOnSubmit, setPasswordInputErrorOnSubmit] =
+    useState("");
+  const [
+    confirmPasswordInputErrorOnSubmit,
+    setConfirmPasswordInputErrorOnSubmit,
+  ] = useState("");
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
-    if (username.length < 5) {
-      setUsernameError("Логин должен содержать минимум 5 символов");
+    setDataError("*the password and login must contain at least 5 characters");
+    if (
+      username.length < 5 ||
+      password.length < 5 ||
+      confirmPassword.length < 5
+    ) {
+      setDataErrorOnSubmit("#EB9E9E");
     } else {
-      setUsernameError("Логин должен содержать минимум 5 символов");
+      setDataErrorOnSubmit("");
     }
-  }, [username]);
+  }, [username, password, confirmPassword, setDataErrorOnSubmit]);
 
   const handleUsernameChange = (e: ChangeEvent<HTMLInputElement>) => {
     setUsername(e.target.value);
 
     if (e.target.value.length < 5) {
       setUsernameInputErrorOnSubmit("#EB9E9E");
-      setUsernameErrorOnSubmit("#EB9E9E");
     } else {
       setUsernameInputErrorOnSubmit("");
-      setUsernameErrorOnSubmit("#3A849B");
     }
   };
 
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
+    if (e.target.value.length < 5) {
+      setPasswordInputErrorOnSubmit("#EB9E9E");
+    } else {
+      setPasswordInputErrorOnSubmit("");
+    }
   };
 
   const handleConfirmPasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
     setConfirmPassword(e.target.value);
+
+    if (e.target.value.length < 5) {
+      setConfirmPasswordInputErrorOnSubmit("#EB9E9E");
+    } else {
+      setConfirmPasswordInputErrorOnSubmit("");
+    }
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (username.length < 5) {
+    if (
+      username.length < 5 ||
+      password.length < 5 ||
+      confirmPassword.length < 5
+    ) {
       setUsernameInputErrorOnSubmit("#EB9E9E");
+      setPasswordInputErrorOnSubmit("#EB9E9E");
+      setConfirmPasswordInputErrorOnSubmit("#EB9E9E");
       setLoading(true);
       setLoading(false);
     } else if (password !== confirmPassword) {
       console.error("Password and confirmation password do not match");
     } else {
       setUsernameInputErrorOnSubmit("");
+      setPasswordInputErrorOnSubmit("");
+      setConfirmPasswordInputErrorOnSubmit("");
       const userData = {
         login: username,
         password: password,
@@ -65,7 +93,7 @@ const SignUp = () => {
   const signUpUser = async (userData: { login: string; password: string }) => {
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:8080/users", {
+      const response = await fetch("http://sea-battle.7bits.it/api/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -96,15 +124,11 @@ const SignUp = () => {
             <div
               style={{
                 textAlign: "center",
-                marginTop: "100px",
-                marginBottom: "120px",
+                marginTop: "200px",
+                marginBottom: "200px",
               }}
             >
-              <ClimbingBoxLoader
-                color={"#36D7B7"}
-                loading={loading}
-                size={30}
-              />
+              <span className="loader"></span>
             </div>
           ) : (
             <form className="card__registration_form" onSubmit={handleSubmit}>
@@ -113,18 +137,10 @@ const SignUp = () => {
                   type="text"
                   value={username}
                   onChange={handleUsernameChange}
-                  placeholder="Username"
+                  placeholder="Login"
                   required
                   className={usernameInputErrorOnSubmit ? "error" : ""}
                 />
-                {
-                  <p
-                    className="input_login-error"
-                    style={{ color: usernameErrorOnSubmit }}
-                  >
-                    {usernameError}
-                  </p>
-                }
               </div>
               <input
                 type="password"
@@ -132,19 +148,37 @@ const SignUp = () => {
                 onChange={handlePasswordChange}
                 placeholder="Password"
                 required
+                className={passwordInputErrorOnSubmit ? "error" : ""}
               />
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-                placeholder="Confirm Password"
-                required
-              />
+              <div>
+                <input
+                  type="password"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                  placeholder="Repeat the password"
+                  required
+                  className={confirmPasswordInputErrorOnSubmit ? "error" : ""}
+                />
+                {
+                  <p
+                    className="input_data-error"
+                    style={{ color: dataErrorOnSubmit }}
+                  >
+                    {dataError}
+                  </p>
+                }
+              </div>
               <button className="card__button" type="submit">
                 Sign Up
               </button>
             </form>
           )}
+          <p className="card__navigate">
+            Already have an account?{" "}
+            <a href="http://sea-battle.7bits.it/login" className="navigate_href">
+              Log in
+            </a>
+          </p>
         </div>
       }
     />

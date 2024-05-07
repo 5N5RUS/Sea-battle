@@ -1,15 +1,16 @@
 .timer {
+  width: 190px;
   margin-right: 30px;
-  margin-left: 30px;
-  font-family: "PT Sans", sans-serif;
+  margin-left: 40px;
+  font-family: pasty-sans, sans-serif;
   font-size: 64px;
-  font-weight: 800;
+  font-weight: 200;
   color: #1f1f1f;
 }
 
 .timer_wrapper {
   display: flex;
-  width: 315;
+  width: 340px;
   height: 84;
   background: #fede65;
   border: 4px #1f1f1f solid;
@@ -25,8 +26,6 @@
   width: 84px;
   height: 84px;
   background-color: white;
-
-  /* border-right: 4px #1f1f1f solid; */
   border-radius: 16px;
 }
 

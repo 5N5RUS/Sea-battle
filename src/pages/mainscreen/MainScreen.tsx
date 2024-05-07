@@ -5,11 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { whoami } from "src/entities/user/userApi";
 import { post } from "src/shared/api/fetcher";
 import MainCard from "src/widgets/main-card/MainCard";
+import { Client, Stomp } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
+import { useAppDispatch } from "src/shared/hooks/ReduxHooks";
 
 const MainScreen = () => {
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState();
   const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
   useEffect(() => {
     whoami()
       .then((userData) => {
@@ -23,6 +26,26 @@ const MainScreen = () => {
       });
   });
 
+  const connectToWebSocket = (sessionId: number) => {
+    const sock = new SockJS(`http://http://sea-battle.7bits.it/api/sea`);
+    const client = Stomp.over(sock);
+    client.connect({}, () => {
+      console.log("Connected: ");
+      client.subscribe(`/topic/sea/${sessionId}`, function(message) {
+        console.log("message:", JSON.parse(message.body).status);
+      });
+    });
+    dispatch({ type: "CLIENT/SUCCESS", client: client });
+    sock.onopen = function() {
+      console.log("WebSocket connection established.");
+    };
+
+    sock.onclose = function() {
+      console.log("WebSocket connection closed.");
+    };
+  };
+
+
   const handleStartGame = async () => {
     try {
       const response = post("session", null);
@@ -31,8 +54,8 @@ const MainScreen = () => {
         console.log("Session created successfully:", data);
         localStorage.setItem("sessionId", data.id);
         if (data.gameState) {
+          connectToWebSocket(data.id);
           if (data.gameState === "STATUS_PENDING") {
-            console.log("HERE");
             navigate("/pendingWindow");
           } else {
             navigate("/placementships");

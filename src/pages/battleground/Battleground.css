@@ -13,7 +13,7 @@
 
 .back-button:active {
   box-shadow:
-    4px 4px 0 black,
+    1px 1px 0 black,
     inset 2px 3px 0 #b5b5b5;
 }
 
@@ -56,4 +56,53 @@
 .full-four {
   background-image: url("src/assets/images/ships/four/full.png");
   background-size: 100%;
+}
+
+.battlegrounds__arraycells_numbers-my {
+  display: flex;
+  gap: 27.5px;
+  margin-bottom: 2px;
+  margin-left: 65px;
+}
+
+.battlegrounds__array_cells-numbers {
+  display: flex;
+  gap: 28px;
+  margin-bottom: 2px;
+  margin-left: 23px;
+}
+
+.battlegrounds__nameofcell-my {
+  font-size: 36px;
+  font-weight: 200;
+  color: #667579;
+  text-align: center;
+}
+
+.battlegrounds__nameofcell-enemy {
+  font-size: 36px;
+  font-weight: 200;
+  color: #333b3c;
+  text-align: center;
+}
+
+.battlegrounds__arraycells_wrapper-column {
+  display: flex;
+  flex-direction: row;
+}
+
+.battlegrounds__array_cells-words {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  margin-right: 8px;
+}
+
+.battlegrounds__arraycells_words-enemy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 8px;
+  margin-left: 8px;
 }

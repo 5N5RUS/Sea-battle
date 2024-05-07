@@ -1,17 +1,38 @@
 .reset-button {
-  width: 200px;
+  width: 247px;
   height: 80px;
   margin-right: 50px;
-  margin-left: 30px;
+  font-family: Inter, sans-serif;
   font-size: 30px;
-  border-radius: 30px;
+  font-weight: 700;
+  color: #2c2c2c;
+  border: 3px black solid;
+  border-radius: 20px;
+  box-shadow: 4px 4px 0 black;
+}
+
+.reset-button:hover {
+  background-color: #f1f1f1;
+}
+
+.reset-button:active {
+  background-color: #f1f1f1;
+  box-shadow:
+    1px 1px 0 black,
+    inset 2px 3px 0 #b5b5b5;
+}
+
+.main_placement-ship {
+  display: flex;
+  justify-content: center;
+  margin-right: 440px;
 }
 
 .ships-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-right: 15px;
+  gap: 42px;
+  margin-right: 100px;
   font-family: Roboto, sans-serif;
   font-size: 20px;
   color: white;
@@ -23,11 +44,121 @@
   gap: 20px;
   align-items: center;
   justify-content: center;
-  width: 400px;
+  width: 247px;
   height: 80px;
+  font-family: Inter, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #2c2c2c;
+  border: 3px black solid;
+  border-radius: 20px;
+  box-shadow: 4px 4px 0 black;
+}
+
+.randomise-button:hover {
+  background-color: #f0f0f0;
+}
+
+.randomise-button:active {
+  background-color: #f1f1f1;
+  box-shadow:
+    1px 1px 0 black,
+    inset 2px 3px 0 #b5b5b5;
 }
 
 .ready-button {
   width: 400px;
   height: 80px;
+  font-family: Inter, sans-serif;
+  font-size: 27px;
+  font-weight: 700;
+  color: #2c2c2c;
+  border: 3px black solid;
+  border-radius: 20px;
+  box-shadow: 4px 4px 0 black;
+}
+
+.ready-button:hover {
+  background-color: #f1f1f1;
+}
+
+.ready-button:active {
+  background-color: #f1f1f1;
+  box-shadow:
+    1px 1px 0 black,
+    inset 2px 3px 0 #b5b5b5;
+}
+
+.right-menu {
+  margin-bottom: 37%;
+}
+
+.right-buttons {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 23px;
+  margin-top: 40px;
+  margin-left: 170px;
+}
+
+.rules-button {
+  width: auto;
+  height: auto;
+  background: none;
+}
+
+.error-text {
+  position: absolute;
+  margin-top: -38px;
+  margin-left: 28px;
+  font-family: pasty-sans, sans-serif;
+  font-size: 26px;
+  color: #eb9e9e;
+}
+
+.ready-block {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-left: 280px;
+}
+
+.ready-button:disabled {
+  color: #d9d9d9;
+  background: white;
+}
+
+.question_button {
+    fill: white;
+}
+
+.question_button:disabled {
+    background: none;
+    fill: #D9D9D9;
+}
+
+.rules-button:disabled {
+    background: none;
+}
+
+.reset-button:disabled {
+    color: #D9D9D9;
+    background: white;
+    border-color: #D9D9D9;
+    box-shadow: 4px 4px 0 #D9D9D9;
+}
+
+.randomise-button:disabled {
+    color: #D9D9D9;
+    background: white;
+    border-color: #D9D9D9;
+    box-shadow: 4px 4px 0 #D9D9D9;
+}
+
+.ready-button:disabled {
+    color: #D9D9D9;
+    background: white;
+    border-color: #D9D9D9;
+    box-shadow: 4px 4px 0 #D9D9D9;
 }

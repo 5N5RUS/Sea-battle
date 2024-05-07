@@ -1,30 +1,39 @@
 import "./CountDownTimer.css";
 
-import React from "react";
+import { useEffect, useState } from "react";
 
-interface ICountdown {
-  minutes: number;
-  seconds: number;
-}
+type timerProps = {
+  startDate: Date;
+  time: number;
+};
 
-const CountDownTimer = ({ minutes = 1, seconds = 0 }: ICountdown) => {
-  const [time, setTime] = React.useState<ICountdown>({ minutes, seconds });
 
-  const tick = () => {
-    if (time.minutes === 0 && time.seconds === 0) reset();
-    else if (time.seconds === 0) {
-      setTime({ minutes: time.minutes - 1, seconds: 59 });
-    } else {
-      setTime({ minutes: time.minutes, seconds: time.seconds - 1 });
-    }
+const CountDownTimer = ({ startDate, time }: timerProps) => {
+  const [timeRemaining, setTimeRemaining] = useState(time);
+
+  useEffect(() => {
+    const startUnixTime = Math.floor(new Date(startDate).getTime() / 1000);
+    const intervalId = setInterval(() => {
+      const currentTime = Math.floor(Date.now() / 1000);
+      const elapsedTime = currentTime - startUnixTime;
+      const remainingTime = time - elapsedTime;
+
+      if (remainingTime <= 0) {
+        clearInterval(intervalId);
+        setTimeRemaining(0);
+      } else {
+        setTimeRemaining(remainingTime);
+      }
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, [startDate, time]);
+
+  const formatTime = (timeInSeconds: number) => {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = timeInSeconds % 60;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
-
-  const reset = () => setTime({ minutes: 1, seconds: 0 });
-
-  React.useEffect(() => {
-    const timerId = setInterval(() => tick(), 1000);
-    return () => clearInterval(timerId);
-  });
 
   return (
     <div className="timer_wrapper">
@@ -32,9 +41,7 @@ const CountDownTimer = ({ minutes = 1, seconds = 0 }: ICountdown) => {
         <img src="src/assets/svgs/alarm.svg" alt="alarm icon" />
       </div>
 
-      <p className="timer">{`${time.minutes
-        .toString()
-        .padStart(2, "0")}:${time.seconds.toString().padStart(2, "0")}`}</p>
+      <p className="timer">{formatTime(timeRemaining)}</p>
     </div>
   );
 };
