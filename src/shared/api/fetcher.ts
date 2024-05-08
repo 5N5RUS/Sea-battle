@@ -1,4 +1,4 @@
-const BASE_URL = "http://sea-battle.7bits.it/api/";
+const BASE_URL = "http://localhost:8080/";
 export const get = async (url: string) => {
   const token = localStorage.getItem("token");
   const response = await fetch(`${BASE_URL}${url}`, {
